@@ -1,0 +1,39 @@
+﻿@model Project_3.Models.Project
+
+    @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager"))
+    {
+        <div class="container" style="padding:20px">
+            <!--Select Boxes-->
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { style = "width:90%;" }))
+            {
+                <div class="row">
+                    @Html.AntiForgeryToken()
+                    @Html.Hidden("ProjectId", (int)ViewBag.ProjectId)
+                    <div class="row" style="padding:20px">
+                        <div class="col-lg-offset-1 col-lg-8">
+                            <label>Select Project Manager</label>
+                            @Html.DropDownList("ProjectManagerId", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row" style="padding:20px">
+                        <div class="col-lg-offset-1 col-lg-8">
+                            <label>Select Submitter</label>
+                            @Html.DropDownList("Submitters", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row" style="padding:20px">
+                        <div class="col-lg-offset-1 col-lg-8">
+                            <label>Select Developers</label>
+                            @Html.ListBox("Developers", null, new { @class = "form-control", style = "height:70px" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="padding:20px">
+                    <div class="col-lg-offset-1 col-lg-8 text-left">
+                        <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </div>
+            }
+        </div>
+
+    }

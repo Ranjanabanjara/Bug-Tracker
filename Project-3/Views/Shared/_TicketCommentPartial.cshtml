@@ -1,0 +1,14 @@
+﻿@model Project_3.Models.TicketComment
+
+
+    <ul class="simple-user-list mb-xlg">
+        <li>
+            <figure class="image rounded">
+                <img src="@Html.DisplayFor(model => model.Ticket.OwnerUser.AvatarPath)" alt="user" class="img-circle">
+            </figure>
+            <span class="title"> @Html.DisplayFor(model => model.Ticket.OwnerUser.FullName)</span>
+            <span class="message"> @Html.DisplayFor(model => model.Comment)</span>
+            <span class="message"> @Html.DisplayFor(model => model.Created)</span>
+        </li>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id })
+    </ul>

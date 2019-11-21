@@ -1,0 +1,464 @@
+﻿@using Project_3.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using Project_3.Helpers;
+
+
+
+
+<!doctype html>
+<html class="fixed sidebar-left-collapsed">
+<head>
+
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <link rel="shortcut icon" href="~/Images/favicon.jpg" />
+
+    <title>Ranjana's Bug Tracker</title>
+
+
+
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+
+
+
+    <!-- Web Fonts  -->
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+
+
+    <!--jquery datatables-->
+    <link href="//cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="//cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+    <!-- Vendor CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/magnific-popup.css" rel="stylesheet" />
+    <link href="~/Content/datepicker3.css" rel="stylesheet" />
+
+
+    <!-- Specific Page Vendor CSS -->
+
+    <link href="~/Content/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="~/Content/morris.css" rel="stylesheet" />
+
+
+    <!-- Theme CSS -->
+
+    <link href="~/Content/theme.css" rel="stylesheet" />
+
+    <!-- Skin CSS -->
+
+    <link href="~/Content/default.css" rel="stylesheet" />
+
+
+
+
+
+
+    <!-- Theme Custom CSS -->
+
+    <link href="~/Content/theme-custom.css" rel="stylesheet" />
+
+    <!-- Head Libs -->
+
+    <script src="~/Scripts/modernizr.js"></script>
+
+</head>
+
+
+<body>
+    <section class="body">
+        @{
+            RoleHelper roleHelper = new RoleHelper();
+
+        }
+
+        <!-- start: header -->
+        <header class="header">
+            <!--logo-->
+            <div class="logo-container">
+                <div class="logo">
+                    <h4 class="customlogo">ɮʊɢ ȶʀǟƈӄɛʀ©</h4>
+                </div>
+                <div class="visible-xs toggle-sidebar-left" data-toggle-class="sidebar-left-opened" data-target="html" data-fire-event="sidebar-left-closed">
+                    <i class="fa fa-bars" aria-label="Toggle sidebar"></i>
+                </div>
+            </div>
+
+            <!-- start: search & user box -->
+            <div class="header-right">
+
+                <span class="separator"></span>
+                <!--Notifications-->
+                <ul class="notifications">
+
+                    <li>
+                        <a href="#" class="dropdown-toggle notification-icon" data-toggle="dropdown">
+                            <i class="fa fa-bell"></i>
+                            <span class="badge">@NotificationHelper.GetUnreadNotifications().Count()</span>
+                        </a>
+
+                        <div class="dropdown-menu notification-menu">
+                            <div class="notification-title">
+                                <span class="pull-right label label-danger"></span>
+                                Notifications
+                            </div>
+
+                            <div class="content">
+                                <ul class="list">
+                                    @if (NotificationHelper.GetUnreadNotifications().Count() != 0)
+                                    {
+                                        foreach (var unreadNotification in NotificationHelper.GetUnreadNotifications())
+                                        {
+                                            <li>
+                                                @using (Html.BeginForm("Dismiss", "TicketNotifications", FormMethod.Get))
+                                                {
+
+
+
+                                                    @Html.AntiForgeryToken()
+
+                                                    @Html.Hidden("Id", unreadNotification.Id)
+
+                                                    <a href="#" class="clearfix">
+                                                        <div class="image">
+                                                            <span class="image"><img src="@unreadNotification.Sender.AvatarPath" height="45" alt="admin" /></span>
+                                                        </div>
+                                                        <span class="title">@unreadNotification.Sender.FullName</span>
+                                                        <span class="cusnotification">@unreadNotification.NotificationBody</span><br/>
+                                                        <span class="title">@unreadNotification.Created.ToString("MMM dd, yyyy")</span>
+                                                    </a>
+                                                    <br />
+                                                    <button type="submit" class="btn btn-danger">Hide</button>
+
+                                                }
+
+
+                                            </li>
+
+
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <li class="text-dark">
+                                            There are No New Notifications!
+                                        </li>
+                                    }
+                            </ul>
+
+                            <hr />
+
+                            <div class="text-right">
+                                <a href="@Url.Action("Index","TicketNotifications")" class="view-more text-dark">Earlier</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <span class="separator"></span>
+
+            <!--User Box-->
+            <div id="userbox" class="userbox">
+                <a href="#" data-toggle="dropdown">
+                    <figure class="profile-picture">
+                        <img src="@UserHelper.GetAvatarPath()" alt="Profile Image" class="img-circle" />
+                    </figure>
+                    <div class="profile-info">
+                        <span class=" text-bold text-info">@UserHelper.GetUserFirstName()  @UserHelper.GetUserLastName()</span>
+
+
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <div>
+                                <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            </div>
+                        }
+                        else if (User.IsInRole("DemoAdmin"))
+                        {
+                            <div>
+                                <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            </div>
+                        }
+                        else if (User.IsInRole("ProjectManager"))
+                        {
+                            <div>
+                                <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            </div>
+                        }
+                        else if (User.IsInRole("Developer"))
+                        {
+                            <div>
+                                <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            </div>
+                        }
+                        else if (User.IsInRole("Submitter"))
+                        {
+                            <div>
+                                <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            </div>
+                        }
+                        else
+                        {
+                            <div>
+                                <span class="role text-bold text-info"></span>
+                            </div>
+                        }
+
+                    </div>
+                    <i class="fa custom-caret"></i>
+                </a>
+
+                <div class="dropdown-menu">
+                    <ul class="list-unstyled">
+                        <li class="divider"></li>
+                        <li>
+                            <a role="menuitem" tabindex="-1" href="@Url.Action("ChangePersonalInfo","Manage")"><i class="fa fa-user"></i> Edit Profile</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li>
+                                <a role="menuitem" tabindex="-1" href=@Url.Action("CustomLogOff", "Account")><i class="fa fa-power-off"></i> Logout</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- end: search & user box -->
+    </header>
+    <!-- end: header -->
+    <!--Body-->
+    <div class="inner-wrapper dash">
+        <!--start left sidebar-->
+        <aside id="sidebar-left" class="sidebar-left">
+            <!--Toggle -->
+            <div class="sidebar-header">
+
+                <div class="sidebar-toggle hidden-xs" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
+                    <i class="fa fa-bars" aria-label="hide sidebar"></i>
+                </div>
+            </div>
+
+            <!--Dashboard Navigations-->
+            <div class="nano">
+                <div class="nano-content">
+                    <nav id="menu" class="nav-main" role="navigation">
+
+                        <ul class="nav nav-main">
+                            <!--Dashboard Home-->
+                            <li class="nav-active">
+                                <a href="@Url.Action("Dashboard","Home")">
+                                    <i class="fa fa-home" aria-hidden="true"></i>
+                                    <span>My Dashboard</span>
+                                </a>
+                            </li>
+
+                            <!--Users and roles -->
+                            @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager"))
+                            {
+                                <li class="nav-parent">
+                                    <a>
+                                        <i class="fa fa-users" aria-hidden="true"></i>
+                                        <span>Users</span>
+                                    </a>
+
+                                    <ul class="nav nav-children">
+
+                                        <li>
+                                            <a href="@Url.Action("ManageRole", "Admin")">
+                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                Manage Role
+                                            </a>
+
+                                        </li>
+                                        <li>
+                                            <a href="@Url.Action("ManageProjectUsers", "Admin")">
+                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                Manage Projects
+                                            </a>
+
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+                            }
+
+
+                            <!--Tasks -->
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                    <span>Projects</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li>
+                                        <a href="@Url.Action("Index", "Projects")">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            All Projects Index
+                                        </a>
+
+                                    </li>
+
+                                    @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Create", "Projects")">
+                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                Create New Project
+                                            </a>
+
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+
+                            <!--Index-->
+                            <li class="nav-parent">
+                                <a>
+                                    <i class="fa fa-bug" aria-hidden="true"></i>
+                                    <span>Tickets</span>
+                                </a>
+                                <ul class="nav nav-children">
+                                    <li>
+
+                                        <a href="@Url.Action("Index", "Tickets")">
+                                            <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                            All Tickets Index
+                                        </a>
+
+                                    </li>
+                                    @if (User.IsInRole("Submitter"))
+                                    {
+                                        <li>
+                                            <a href="@Url.Action("Create", "Tickets")">
+                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                Create New Ticket
+                                            </a>
+
+                                        </li>
+                                    }
+                                    @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin"))
+                                    {
+
+                                        <li>
+                                            <a href="@Url.Action("Index", "TicketHistories")">
+                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                Ticket Histories
+                                            </a>
+
+                                        </li>
+
+                                    }
+
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </nav>
+
+                    <hr class="separator" />
+
+                </div>
+            </div>
+
+        </aside>
+        <!-- end left sidebar -->
+
+
+
+        @RenderBody()
+
+
+    </div>
+
+    <!--main content-->
+
+</section>
+
+
+
+
+
+<!-- Vendor -->
+<script src="~/Scripts/jquery.js"></script>
+<script src="~/Scripts/jquery.browser.mobile.js"></script>
+<script src="~/Scripts/bootstrap.js"></script>
+<script src="~/Scripts/nanoscroller.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/magnific-popup.js"></script>
+<script src="~/Scripts/jquery.placeholder.js"></script>
+
+
+<!-- Specific Page Vendor -->
+
+<script src="~/Scripts/jquery-ui-1.10.4.custom.js"></script>
+<script src="~/Scripts/jquery.ui.touch-punch.js"></script>
+<script src="~/Scripts/jquery.appear.js"></script>
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+<script src="~/Scripts/jquery.easypiechart.js"></script>
+<script src="~/Scripts/jquery.flot.js"></script>
+<script src="~/Scripts/jquery.flot.tooltip.js"></script>
+
+<script src="~/Scripts/jquery.flot.categories.js"></script>
+<script src="~/Scripts/jquery.flot.resize.js"></script>
+<script src="~/Scripts/jquery.sparkline.js"></script>
+
+<script src="~/Scripts/gauge.js"></script>
+<script src="~/Scripts/snap.svg.js"></script>
+<script src="~/Scripts/liquid.meter.js"></script>
+
+
+<!-- Theme Base, Components and Settings -->
+<script src="~/Scripts/theme.js"></script>
+
+<!--Jquery datatables-->
+
+<script src="//cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="//cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+<script src="//cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+<script src="//cdn.datatables.net/buttons/1.5.6/js/buttons.print.min.js"></script>
+
+<!-- Theme Custom -->
+<script src="~/Scripts/theme.custom.js"></script>
+
+<!-- Theme Initialization Files -->
+<script src="~/Scripts/theme.init.js"></script>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#dataTable').DataTable(
+            {
+                dom: 'Bfrtip',
+                buttons: [
+                    'excel', 'pdf', 'print'
+                ],
+                pageLength: 10,
+            });
+    });
+
+</script>
+
+@RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+
+
+
+
+

@@ -1,0 +1,103 @@
+/* Add here all your CSS customizations */
+.dash {
+    
+    background-color: #f1efe9;
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+ 
+}
+
+.register {
+    background-color: #ffffff;
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+th {
+    background-color: cadetblue;
+    font-size: 2vw;
+    color: wheat;
+    font-variant: small-caps;
+   
+    
+}
+dd {
+    padding-bottom: 10px;
+    color: black;
+    font-size: 14px;
+}
+.customlogo {
+    color: #ae1664;
+    font-size: 2vw;
+    font-weight: 900;
+  
+}
+td {
+    font-size: 18px;
+    font-family: 'Times New Roman', Times, serif;
+    color: #000000;
+    text-align: left;
+    font-weight: 500;
+}
+.htwo {
+    font-size: 2vw;
+    color: #28072c;
+    text-align: center;
+    font-weight: 900;
+}
+.modal-title {
+    font-size: 2vw;
+    color: #28072c;
+    text-align: center;
+    font-weight: 900;
+}
+.hthree {
+    font-size: 18px;
+    font-family:'Comic Sans MS';
+    color: darkmagenta;
+    text-align: left;
+    font-weight: 900;
+}
+.list {
+    font-size: 14px;
+    font-family: 'Global Serif';
+    color: black;
+    text-align: left;
+    font-weight: 700;
+}
+.comment {
+    font-size: 16px;
+    font-family: 'Comic Sans MS';
+    color: black;
+    padding: 5px;
+    font-weight: 400;
+}
+.cusnotification {
+    font-size: 10px;
+    font-family: 'Comic Sans MS';
+    color: blue;
+    font-weight: 200;
+}
+
+}
+.panel1 {
+    background: transparent;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    border: 3px solid green;
+}
+.demologin {
+    font-size: 12px;
+    font-family: 'Comic Sans MS';
+    color: #312838;
+    font-weight: 400;
+}
+
+
+
+
+
+
+

@@ -1,0 +1,103 @@
+﻿@model Project_3.Models.Ticket
+@{
+    ViewBag.Title = "Assign Ticket";
+}
+    <section role="main" class="content-body dash">
+        <!--header-->
+        <header class="page-header">
+            <h2>@ViewBag.Title</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="@Url.Action("Dashboard","Home")">
+                            <i class="fa fa-home"></i>  <span> Go to DashBoard</span>
+                        </a>
+                    </li>
+
+                    <li style="padding-right:10px"><span>@ViewBag.Title</span></li>
+                </ol>
+
+            </div>
+        </header>
+        <!--table-->
+        
+        <section class="panel-transparent">
+            <header class="panel-heading">
+              
+                <h2 class="htwo">SELECT DEVELOPER TO ASSIGN TICKET</h2>
+            </header>
+            <div class="panel-body">
+                <section class="panel">
+                    <div class="panel-body">
+
+
+
+                        <div class="hthree"><i class="fa fa-globe"></i>  <span>Project Title</span></div>
+                        <p class="comment">@Model.Project.ProjectName</p>
+                    </div>
+                </section>
+                <section class="panel">
+                    <div class="panel-body">
+                       
+                        <div class="hthree"><i class="fa fa-ticket"></i>  <span>Ticket Title</span></div>
+                        <p class="comment">@Model.Title</p>
+                    </div>
+                </section>
+                <section class="panel">
+                    <div class="panel-body">
+
+
+                        <div class="hthree"><i class="fa fa-user-md"></i>  <span>Select Developer</span></div>
+                  
+                       
+                            <div class="row" style="padding-left:10px">
+                                @using (Html.BeginForm("AssignTicket", "Tickets", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <div class="row" style="padding-top:10px">
+
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        @Html.HiddenFor(model => model.Id)
+
+                                        <div class="col-md-6">
+
+
+                                            @Html.DropDownList("AssignedToUserId", null, new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(model => model.AssignedToUserId, "", new { @class = "text-danger" })
+
+                                        </div>
+                                        <div class="col-md-2">
+
+                                            <input type="submit" value="Assign" class="btn btn-success" />
+
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+
+                   
+
+
+                    </div>
+                </section>
+            </div>
+        </section>
+
+
+       
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </section>

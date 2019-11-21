@@ -1,0 +1,167 @@
+﻿
+@model UserProfileViewModel
+@using Project_3.Models;
+@using Microsoft.AspNet.Identity;
+@using Microsoft.AspNet.Identity.EntityFramework;
+@using Project_3.Helpers;
+
+
+<section role="main" class="content-body">
+    <header class="page-header">
+        <h2>User Profile</h2>
+
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="@Url.Action("Dashboard","Home")">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+
+                <li style="padding-right:10px"><span>User Profile</span></li>
+            </ol>
+
+        </div>
+    </header>
+
+    <!-- start: page -->
+
+    <div class="row">
+        
+        <!--change personal information-->
+        <div class="col-md-4 col-lg-3">
+            @{
+                RoleHelper roleHelper = new RoleHelper();
+                ProjectHelper projectHelper = new ProjectHelper();
+                TicketHelper ticketHelper = new TicketHelper();
+            }
+            <section class="panel">
+                <div class="panel-body">
+                    <div class="thumb-info mb-md">
+                        <img src="@UserHelper.GetAvatarPath()" class="rounded img-responsive" alt="Profile Picture">
+                        <div class="thumb-info-title">
+                            <span class="thumb-info-inner">@UserHelper.GetUserFirstName()</span>
+
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <span class="thumb-info-type">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            }
+                            else if (User.IsInRole("DemoAdmin"))
+                            {
+                                <span class="thumb-info-type">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            }
+                            else if (User.IsInRole("ProjectManager"))
+                            {
+                                <span class="thumb-info-type">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            }
+                            else if (User.IsInRole("Developer"))
+                            {
+                                <span class="thumb-info-type">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            }
+                            else if (User.IsInRole("Submitter"))
+                            {
+                                <span class="thumb-info-type">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                            }
+                            else
+                            {
+                                <span class="thumb-info-type">User</span>
+                            }
+
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <hr class="dotted short">
+                    <h6 class="text-bold"><i class="fa fa-slack"></i>  <span>My Projects</span> </h6>
+                    <span>@projectHelper.ListUserProjects(UserHelper.GetUserId().Id).Count()</span>
+                    <div class="clearfix pull-right">
+                        @Html.ActionLink("View", "Index", "Projects")
+                    </div>
+                    <hr class="dotted short">
+                    <h6 class="text-bold"><i class="fa fa-file-code-o"></i>  <span>My Tickets</span> </h6>
+                    <span>@ticketHelper.ListMyTickets().Count()</span>
+                    <div class="clearfix pull-right">
+                        @Html.ActionLink("View", "Index", "Tickets")
+                    </div>
+
+                    <hr class="dotted short">
+
+                    <div class="social-icons-list text-center">
+                        <a rel="tooltip" data-placement="bottom" target="_blank" href="http://www.facebook.com" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+                        <a rel="tooltip" data-placement="bottom" href="http://www.twitter.com" data-original-title="Twitter"><i class="fa fa-twitter"></i><span>Twitter</span></a>
+                        <a rel="tooltip" data-placement="bottom" href="http://www.linkedin.com" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+        <div class="col-md-8 col-lg-6">
+            <h2 class="text-success">@ViewBag.StatusMessage</h2>
+
+            <div class="tabs">
+                <ul class="nav nav-tabs tabs-primary">
+                    <li class="active">
+                        <a href="#overview" data-toggle="tab">Change Personal Information</a>
+                    </li>
+                    <li>
+                        <a href="#edit" data-toggle="tab">Change Password</a>
+                    </li>
+
+                </ul>
+                <div class="tab-content">
+                    <!--change personal information-->
+                    <div id="overview" class="tab-pane active">
+
+                        @using (Html.BeginForm("ChangePersonalInfo" ,"Manage", FormMethod.Post, new { style = "width:90%;" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <h4 class="mb-xlg">Personal Information</h4>
+                            <fieldset>
+                                <h2 class="text-success">@ViewBag.StatusMessage</h2>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-8">
+                                        @Html.TextAreaFor(m => m.FirstName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-8">
+                                        @Html.TextAreaFor(m => m.LastName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.DisplayName, new { @class = "col-md-3 control-label" })
+                                    <div class="col-md-8">
+                                        @Html.TextAreaFor(m => m.DisplayName, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <hr class="dotted tall">
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <div class="col-md-3 col-md-offset-3">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <!--change password information-->
+                    <div id="edit" class="tab-pane">
+
+                        @Html.Partial("_ChangePassword", new ChangePasswordViewModel())
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

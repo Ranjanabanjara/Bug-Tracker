@@ -1,0 +1,288 @@
+﻿
+@using Project_3.Models
+@using Project_3.Helpers;
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+
+
+<!doctype html>
+<html class="fixed">
+<head>
+
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="shortcut icon" href="~/Images/favicon.jpg" />
+    <!-- Web Fonts  -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+    <!-- Vendor CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/magnific-popup.css" rel="stylesheet" />
+    <link href="~/Content/datepicker3.css" rel="stylesheet" />
+
+
+    <!-- Theme CSS -->
+
+    <link href="~/Content/theme.css" rel="stylesheet" />
+
+    <!-- Skin CSS -->
+
+    <link href="~/Content/default.css" rel="stylesheet" />
+
+    <!-- Theme Custom CSS -->
+
+    <link href="~/Content/theme-custom.css" rel="stylesheet" />
+
+    <!-- Head Libs -->
+
+    <script src="~/Scripts/modernizr.js"></script>
+
+</head>
+<body>
+    <!-- start: page -->
+    <div class="container-fluid register" style="background-image: url(/Images/register.jpg)">
+
+        <section class="body-sign">
+            <div class="center-sign">
+                <div class="panel1">
+
+                    <div class="panel-heading bg-tertiary">
+                        ɮʊɢ ȶʀǟƈӄɛʀ©
+                    </div>
+
+                    <div class="panel-body">
+
+                        <div class="row text-center comment">
+                            <a data-toggle="popover" data-trigger="hover" title="Roles & Rules" data-html="true" data-content="<dl><dt><b>Admin</b></dt><dd>Admin has almost all the access to the application functions except creating a Ticket.</dd><dt><b>Project Manager</b></dt><dd>Access to app functionality for managing projects they are assigned to.</dd><dt><b>Developer</b></dt><dd>Access app functionality for managing the tickets they are assigned to.</dd><dt><b>Submitter</b></dt><dd>Creates ticket for the projects they are assigned to.</dd></dl>" href="#" >
+                                **Login As Demo Users!**
+                            </a>
+                        </div>
+                        <div class="row" style="padding-left:10px">
+                            <div class="col-md-3">
+                                @using (Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("emailKey", "DemoAdminEmail")
+
+                                    <div id="userbox" class="userbox">
+                                        <a href="#" data-role="submit" title="Click to Login as DemoAdmin" data-placement="top" data-toggle="tooltip">
+                                            <figure class="login-picture">
+
+                                                <img src="~/Images/demoadmin.jpg" alt="Profile Image" class="img-circle" />
+                                            </figure>
+                                        </a>
+                                        <p class="demologin">DemoAdmin</p>
+
+                                    </div>
+                                }
+                            </div>
+                            <div class="col-md-3">
+                                @using (Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("emailKey", "DemoProjectManagerEmail")
+
+
+                                <div id="userbox" class="userbox">
+                                    <a href="#" data-role="submit" title="Click to Login as DemoProjectManager" data-placement="bottom" data-toggle="tooltip">
+                                        <figure class="login-picture">
+
+                                            <img src="~/Images/projectmanager.jpg" alt="Profile Image" class="img-circle" />
+                                        </figure>
+                                    </a>
+                                    <p class="demologin" style="padding-left:10px">DemoPM</p>
+
+                                </div>
+                                }
+                            </div>
+                            <div class="col-md-3">
+                                @using (Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("emailKey", "DemoDeveloperEmail")
+
+                                <div id="userbox" class="userbox">
+                                    <a href="#" data-role="submit" title="Click to Login as DemoDeveloper" data-placement="top" data-toggle="tooltip">
+                                        <figure class="login-picture">
+
+                                            <img src="~/Images/developer.jpg" alt="Profile Image" class="img-circle" />
+                                        </figure>
+                                    </a>
+                                    <p class="demologin">DemoDeveloper</p>
+
+                                </div>
+                                }
+                            </div>
+                            <div class="col-md-3">
+                                @using (Html.BeginForm("DemoLoginAsync", "Account", FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("emailKey", "DemoSubmitterEmail")
+
+                                <div id="userbox" class="userbox">
+                                    <a href="#" data-role="submit" title="Click to Login as DemoSubmitter" data-placement="bottom" data-toggle="tooltip">
+                                        <figure class="login-picture">
+
+                                            <img src="~/Images/submitter.jpg" alt="Profile Image" class="img-circle" />
+                                        </figure>
+                                    </a>
+                                    <p class="demologin">DemoSubmitter</p>
+
+                                </div>
+                                }
+                            </div>
+
+                        </div>
+                        <span class="mt-lg mb-lg line-thru text-center"><span>OR</span></span>
+
+
+
+                        <div>
+                            <div class="row" style="padding:0px 20px 10px 20px ">
+
+                                @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-group mb-lg">
+
+                                        <div class="input-group input-group-icon">
+                                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-lg", placeholder = "Email" })
+                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                                            <span class="input-group-addon">
+                                                <span class="icon icon-lg">
+                                                    <i class="fa fa-user"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-lg">
+
+                                        <div class="input-group input-group-icon">
+                                            @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg", placeholder = "Password" })
+                                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                            <span class="input-group-addon">
+                                                <span class="icon icon-lg">
+                                                    <i class="fa fa-lock"></i>
+                                                </span>
+                                            </span>
+                                        </div>
+                                       
+                                       
+                                        <div class="checkbox" style="padding-left:30px;">
+                                            @Html.CheckBoxFor(m => m.RememberMe)
+                                            @Html.LabelFor(m => m.RememberMe)
+                                        </div>
+                                        
+
+                                       
+                                    </div>
+                                    <div class="row text-center">
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-facebook">SIGN In</button>
+                                        </div>
+                                    </div>
+
+                                }
+
+                                <span class="mt-lg mb-lg line-thru text-center text-uppercase">
+                                    <span>or</span>
+                                </span>
+
+
+                                <div class="col-md-12 clearfix comment text-center">
+
+                                    <a href="#">@Html.ActionLink("**ForgotPassword??**", "ForgotPassword")</a>
+
+                                </div>
+
+
+
+                                <div class="mb-xs text-center comment">
+                                    <p>
+                                        <span>Don't have an Account?</span><span><span>@Html.ActionLink("**Sign Up here!**", "Register")</span></span>
+                                    </p>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-muted mt-md mb-md">&copy; Copyright 2019. Made with all regards!</p>
+
+            </div>
+        </section>
+    </div>
+
+    <!-- end: page -->
+    <!-- Vendor -->
+    <script src="~/Scripts/jquery.js"></script>
+    <script src="~/Scripts/jquery.browser.mobile.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/nanoscroller.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/magnific-popup.js"></script>
+    <script src="~/Scripts/jquery.placeholder.js"></script>
+
+
+    <!-- Theme Base, Components and Settings -->
+
+    <script src="~/Scripts/theme.js"></script>
+
+    <!-- Theme Custom -->
+
+    <script src="~/Scripts/theme.custom.js"></script>
+
+    <!-- Theme Initialization Files -->
+
+    <script src="~/Scripts/theme.init.js"></script>
+   
+   
+        
+
+   
+
+
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

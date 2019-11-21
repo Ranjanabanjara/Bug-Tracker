@@ -1,0 +1,374 @@
+﻿
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+
+
+    <section role="main" class="content-body">
+        <!--page header-->
+        <header class="page-header">
+            <h2>@ViewBag.Title</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="@Url.Action("Dashboard","Home")">
+                            <i class="fa fa-home"></i>   <span> Go to DashBoard</span>
+                        </a>
+                    </li>
+
+                    <li style="padding-right:10px"><span>@ViewBag.Title</span></li>
+                </ol>
+
+            </div>
+        </header>
+        <!--quick info-->
+        <div class="row">
+            <div class="col-md-3">
+                <section class="panel">
+                    <div class="panel-body bg-primary">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon">
+                                    <i class="fa fa-pencil-square-o"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title">My Projects</h4>
+                                    <div class="info">
+                                        <strong class="amount"></strong>
+                                    </div>
+                                </div>
+                                <div class="summary-footer">
+                                    <a class="text-uppercase" href="@Url.Action("Index", "Projects")">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="col-md-3">
+                <section class="panel">
+                    <div class="panel-body bg-secondary">
+                        <div class="widget-summary">
+                            <div class="widget-summary-col widget-summary-col-icon">
+                                <div class="summary-icon">
+                                    <i class="fa fa-life-ring"></i>
+                                </div>
+                            </div>
+                            <div class="widget-summary-col">
+                                <div class="summary">
+                                    <h4 class="title">My Tickets</h4>
+                                    <div class="info">
+                                        <strong class="amount">5</strong>
+                                    </div>
+                                </div>
+                                <div class="summary-footer">
+                                    <a class="text-uppercase" href="@Url.Action("Index", "Tickets")">View</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-4">
+                <section class="panel-featured-left panel-featured-warning">
+                    <div class="panel-body">
+                        <div class="row panel-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-warning">
+                                        <i class="fa fa-bell"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="hthree">Unassigned Tickets </h4>
+                                        <div class="info">
+                                            <strong class="amount">5</strong>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="list" style="padding-left:20px">
+
+                                <i class="fa fa-play-circle"></i> <a>Assign</a>  
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+        <!--Ticket Type Liquid Charts-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel">
+                    <div class="panel-heading">
+                        Ticket Type
+
+                    </div>
+                    <div class="panel-body" aria-expanded="true" id="ticket-type-panel">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="tickets-type-liquid-chart" style="height: 460px"></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="tickets-type-liquid-chart" style="height: 460px"></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="tickets-type-liquid-chart" style="height: 460px"></div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="tickets-type-liquid-chart" style="height: 460px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Ticket Piechart-->
+        <div class="row">
+            <div class="col-md-6">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+
+                        <h2 class="panel-title">Ticket Chart</h2>
+                        <p class="panel-subtitle">Pie Chart</p>
+                    </header>
+                    <div class="panel-body">
+
+                        <!-- Flot: Pie -->
+                        <div class="chart chart-md" id="chartTwo">
+
+                        </div>
+
+
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-6">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+
+                        <h2 class="panel-title">Ticket Chart</h2>
+                        <p class="panel-subtitle">Pie Chart</p>
+                    </header>
+                    <div class="panel-body">
+
+                        <!-- Flot: Pie -->
+                        <div class="chart chart-md" id="chartThree">
+
+                        </div>
+
+
+                    </div>
+                </section>
+            </div>
+        </div>
+        <!--Ticket Barchart-->
+        <div class="row">
+            <div class="col-md-12">
+                <section class="panel">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+
+                        <h2 class="panel-title">Ticket Counts For Different Priorities</h2>
+
+                    </header>
+                    <div class="panel-body">
+
+                        <!-- Morris: Bar -->
+                        <div class="chart chart-md" id="chartOne">
+
+                        </div>
+
+
+                    </div>
+                </section>
+            </div>
+        </div>
+
+
+
+    </section>
+
+
+
+@section scripts{
+
+    <script src="~/Scripts/raphael.js"></script>
+    <script src="~/Scripts/morris.js"></script>
+    <script src="~/Scripts/jquery.flot.pie.js"></script>
+    <script src="~/Scripts/echarts.js"></script>
+    <script src="~/Scripts/echarts-liquidfill.min.js"></script>
+
+
+    <script>
+         buildTicketTypeChart();
+        $(function () {
+            var url = '@Url.Action("BarChartData","Charts")';
+            $.post(url).then(function (response) {
+                new Morris.Bar({
+                    element: 'chartOne',
+                    data: response,
+                    xkey: 'label',
+                    ykeys: ['value'],
+                    labels: ['Ticket Count'],
+                    resize: true
+
+                });
+
+            });
+        });
+
+         $(function () {
+            var url = '@Url.Action("PieChartData","Charts")';
+             $.post(url).then(function (response) {
+
+                 var plot = $.plot('#chartTwo', response, {
+                     series: {
+                         pie: {
+                             show: true,
+                             combine: {
+                                 color: '#999',
+                                 threshold: 0.1
+                             }
+                         }
+                     },
+                     legend: {
+                         show: false
+                     },
+                     grid: {
+                         hoverable: true,
+                         clickable: true
+                     }
+                 });
+             });
+
+         });
+        //TicketYpeLiquidChart
+          function buildTicketTypeChart() {
+             AjaxForTicketTypeChart('@Url.Action("LiquidChartData", "Charts")');
+        }
+        function AjaxForTicketTypeChart(dataUrl) {
+            $.ajax({
+                url: dataUrl,
+                success: function (response) {
+                    buildTicketTypeLiquidChart(response);
+                }
+            });
+        }
+           var charts = [];
+    //Ticket Type Liquid Chart
+    function buildTicketTypeLiquidChart(data) {
+    var options = [];
+    $.each(data, function (index, value) {
+    var currentFontSize = 18;
+    if (value.TypeName == 'Defect') currentFontSize = 30;
+    else if (value.TypeName == 'Feature Request') currentFontSize = 25;
+        else if (value.TypeName == 'Documentation Request') currentFontSize = 20;
+         else if (value.TypeName == 'Training Request') currentFontSize = 15;
+    var currentVal = Number(value.Percentage);
+    var option = {
+    series: [{
+    type: 'liquidFill',
+    data: [currentVal, {
+    value: currentVal - 0.05,
+                    direction: 'left'
+        }, currentVal - 0.1, {
+    value: currentVal - 0.15,
+    direction: 'left'
+    }],
+    radius: '70%',
+    label: {
+    formatter: function (param) {
+    return value.TypeName + '\n\n' + (param.value * 100).toFixed(1) + '%';
+    },
+    textStyle: {
+    fontSize: currentFontSize,
+    fontFamily: 'Lobster Two'
+    }
+    }
+    }]
+    }
+    options.push(option);
+    });
+     var containers = document.getElementsByClassName('tickets-type-liquid-chart');
+
+    for (var i = 0; i < options.length; ++i) {
+    var chart = echarts.init(containers[i]);
+
+    if (i > 0) {
+    options[i].series[0].silent = true;
+    }
+    chart.setOption(options[i]);
+    chart.setOption({
+    baseOption: options[i],
+    media: [{
+    query: {
+    maxWidth: 300
+    },
+    option: {
+    series: [{
+    label: {
+    fontSize: 26
+    }
+    }]
+    }
+    }]
+    });
+
+    charts.push(chart);
+    }
+    }
+
+
+
+
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

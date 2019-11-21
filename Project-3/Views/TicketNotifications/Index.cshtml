@@ -1,0 +1,68 @@
+﻿@model IEnumerable<Project_3.Models.TicketNotification>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<section role="main" class="content-body dash">
+    <header class="page-header">
+        <h2>@ViewBag.Title</h2>
+
+        <div class="right-wrapper pull-right">
+            <ol class="breadcrumbs">
+                <li>
+                    <a href="@Url.Action("Dashboard","Home")">
+                        <i class="fa fa-home"></i>   <span> Go to DashBoard</span>
+                    </a>
+                </li>
+
+                <li style="padding-right:10px"><span>@ViewBag.Title</span></li>
+            </ol>
+
+        </div>
+    </header>
+    <div class="row">
+        <h2 class="htwo">ALL NOTIFICATIONS INDEX</h2>
+    </div>
+
+    
+    <div class="row">
+        <table class="table table-striped table-bordered" id="dataTable" style="width:100%">
+            <thead>
+                <tr>
+                   
+                    <th>
+                        @Html.DisplayName("Sent By") 
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NotificationBody)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.IsRead)
+                    </th>
+                    <th>@Html.DisplayName("Options")</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ticket.OwnerUser.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NotificationBody)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsRead)
+                        </td>
+                        <td>
+                          
+                            <button class="btn-sm btn-link btn-danger">@Html.ActionLink("Delete", "Delete", new { id = item.Id })</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>

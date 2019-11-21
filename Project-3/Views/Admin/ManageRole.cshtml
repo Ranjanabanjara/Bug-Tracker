@@ -1,0 +1,148 @@
+﻿@model IEnumerable<Project_3.Models.ManageRoleViewModel>
+@{
+    ViewBag.Title = "ManageRole";
+}
+<!--Renders Body-->
+
+    <section role="main" class="content-body login">
+        <!--header-->
+        <header class="page-header">
+            <h2>@ViewBag.Title</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="@Url.Action("Dashboard","Home")">
+                            <i class="fa fa-home"></i>
+                        </a>
+                    </li>
+
+                    <li style="padding-right:10px"><span>@ViewBag.Title</span></li>
+                </ol>
+
+            </div>
+        </header>
+        <h2 class="htwo">ASSIGN ROLE TO USERS/CHANGE THE EXISTING ROLE</h2>
+
+        @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin"))
+        {
+            <div class="row comment" style="padding-left:50px">
+                <div class="col-lg-12">
+                    @using (Html.BeginForm(null, null, FormMethod.Post, new { style = "width:90%;" , @Id = "roleForm"}))
+                    {
+                        @Html.AntiForgeryToken()
+
+                        <div class="row">
+
+                            <div class="col-lg-12">
+                                <label>Select Users</label>
+                                <!-- listbox -->
+                                @Html.ListBox("UserIds", null, new { @class = "form-control", size = "8" })
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 50px;">
+
+                            <div class="col-lg-12">
+                                <label>Select Role</label>
+                                <!-- dropdown -->
+                                @Html.DropDownList("Role", null, "None", new { @class = "form-control", })
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 50px;">
+                            <div class="col-lg-6 text-left">
+                                <button type="submit" class="btn btn-success">ASSIGN ROLE</button>
+                                
+                                 <button id="unassign" type="submit" class="btn btn-danger">UNASSIGN ROLE</button>
+                               
+                            </div>
+                        </div>
+                       
+                    }
+                </div>
+            </div>
+        }
+      
+     
+        <!--Select Boxes-->
+
+        <hr style="border:1px solid groove" />
+        <!--Table-->
+
+        <table class="table table-striped table-bordered" id="dataTable" style="width:100%">
+            <thead>
+                <tr>
+                    <th>
+                        <i class="fa fa-user"></i>
+                    </th>
+                    <th>
+                        @Html.DisplayName("FirstName")
+                    </th>
+                    <th>
+                        @Html.DisplayName("LastName")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Email")
+                    </th>
+                    <th>
+                        @Html.DisplayName("AssignedRole")
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in Model)
+                {
+                    <tr>
+                        <td>
+                            <img src=" @Html.DisplayFor(model => user.AvatarPath)" width="60" height="60" class="img-circle" />
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => user.FirstName)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => user.LastName)
+
+                        </td>
+                        <td>
+                            @Html.DisplayFor(model => user.Email)
+
+                        </td>
+                        <td>
+
+
+                            @Html.DisplayFor(model => user.RoleName)
+
+
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+
+    </section>
+@section Scripts{
+    
+<script>
+
+    $("#unassign").click(function () {
+
+        $.ajax({
+        url: '/Admin/UnassignRole',
+        type: 'post',
+        dataType: 'json',
+        data: $('#roleForm').serialize(),
+        success: function() {
+                   // ... do something with the data...
+             $(this).closest("form").submit();
+                 }
+    });
+
+    });
+
+</script>
+    
+    }

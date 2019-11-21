@@ -1,0 +1,668 @@
+﻿@model Project_3.Models.Ticket
+@using Project_3.Helpers;
+@{
+    ViewBag.Title = "DETAILS OF TICKET";
+
+}
+<!--Details of ticket-->
+    <section role="main" class="content-body dash">
+        <!--Header-->
+        <header class="page-header">
+            <h2>@ViewBag.Title</h2>
+
+            <div class="right-wrapper pull-right">
+                <ol class="breadcrumbs">
+                    <li>
+                        <a href="@Url.Action("Dashboard", "Home")">
+                            <i class="fa fa-home"></i>  <span> Go to DashBoard</span>
+                        </a>
+                    </li>
+
+                    <li style="padding-right:10px"><span>@ViewBag.Title</span></li>
+                </ol>
+
+            </div>
+        </header>
+        <div class="row text-center" style="padding:20px 40px 20px 40px">
+            <a class="htwo" href="@Url.Action("Edit", "Tickets", new { id = Model.Id})">CLICK TO EDIT THE DETAILS OF TICKET</a>
+        </div>
+        <hr />
+
+        <!--Priority/Status/Description-->
+
+        <div class="row" style="padding-top:20px">
+            <!--Ticket Priority-->
+            <div class="col-md-6">
+                <section class="panel-featured-left panel-featured-success">
+                    <div class="panel-body">
+                        <div class="row panel-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-success">
+                                        <i class="fa fa-bell"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="hthree">TICKET PRIORITY </h4>
+                                        <div class="info">
+                                            <strong class="amount">@Html.DisplayFor(model => model.TicketPriority.PriorityName)</strong>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="list" style="padding-left:20px">
+
+                                <i class="fa fa-info-circle"></i>   @Html.DisplayFor(model => model.TicketPriority.Description)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!--Ticket Type-->
+            <div class="col-md-6">
+                <section class="panel-featured-left panel-featured-secondary">
+                    <div class="panel-body">
+                        <div class="row panel-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-secondary">
+                                        <i class="fa fa-bug"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="hthree">TICKET TYPE</h4>
+                                        <div class="info">
+                                            <strong class="amount">@Html.DisplayFor(model => model.TicketType.TypeName)</strong>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="list" style="padding-left:20px">
+
+                                <i class="fa fa-info-circle"></i>   @Html.DisplayFor(model => model.TicketType.Description)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+        </div>
+
+        <!--ticketstatus/description-->
+        <div class="row" style="padding-top:20px">
+
+            <!--Ticket status-->
+            <div class="col-md-6">
+                <section class="panel-featured-left panel-featured-dark">
+                    <div class="panel-body">
+                        <div class="row panel-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-dark">
+                                        <i class="fa fa-flag"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="hthree">TICKET STATUS</h4>
+                                        <div class="info">
+                                            <strong class="amount">@Html.DisplayFor(model => model.TicketStatus.StatusName)</strong>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="list" style="padding-left:20px">
+
+                                <i class="fa fa-info-circle"></i> @Html.DisplayFor(model => model.TicketStatus.info)
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+
+            <!--Ticket description-->
+            <div class="col-md-6">
+                <section class="panel-featured-left panel-featured-tertiary">
+                    <div class="panel-body">
+                        <div class="row panel-body">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon bg-tertiary">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="hthree">TICKET DESCRIPTION </h4>
+                                        <div class="info">
+                                            <strong class="comment">@Html.DisplayFor(model => model.Description)</strong>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="list" style="padding-left:20px">
+
+                                <i class="fa fa-info-circle"></i> Click the link at the top of the page to edit the description
+                            </div>
+                        </div>
+
+                    </div>
+                </section>
+
+            </div>
+
+
+
+        </div>
+
+        <!--Developer/Submitter-->
+        <div class="row" style="padding-top:50px">
+
+            <!--Ticket Created by-->
+            <div class="col-md-6">
+                <section class="panel panel-danger">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+
+                        <h2 class="panel-title">SUBMITTER</h2>
+                    </header>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="@Html.DisplayFor(model => model.OwnerUser.AvatarPath)" height="120" width="120" alt="developer" />
+                            </div>
+                            <div class="col-md-offset-4 text-bold">
+                                <h4 class="hthree"><i class="fa fa-eye"></i> Quick Info</h4>
+                                <ul class="list">
+                                    <li>
+                                        FirstName:  @Html.DisplayFor(model => model.OwnerUser.FirstName)
+                                    </li>
+                                    <li>
+                                        LastName:   @Html.DisplayFor(model => model.OwnerUser.LastName)
+                                    </li>
+                                    <li>
+                                        Email:   @Html.DisplayFor(model => model.OwnerUser.Email)
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!--Developer assigned-->
+            <div class="col-md-6">
+                <section class="panel panel-warning">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+
+                        <h2 class="panel-title">ASSIGNED DEVELOPER</h2>
+                    </header>
+                    <div class="panel-body">
+
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="@Html.DisplayFor(model => model.AssignedToUser.AvatarPath)" height="120" width="120" alt="developer" />
+                            </div>
+                            <div class="col-md-offset-4 text-bold">
+                                <h4 class="hthree"><i class="fa fa-eye"></i> Quick Info</h4>
+                                <ul class="list">
+                                    <li>
+                                        FirstName:  @Html.DisplayFor(model => model.AssignedToUser.FirstName)
+                                    </li>
+                                    <li>
+                                        LastName:   @Html.DisplayFor(model => model.AssignedToUser.LastName)
+                                    </li>
+                                    <li>
+                                        Email:   @Html.DisplayFor(model => model.AssignedToUser.Email)
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <!--Attachments & Created/updated-->
+        <div class="row" style="padding-top:40px">
+
+            <!--Ticket Attachments-->
+            <div class="col-md-6">
+                <section class="panel panel-success">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+
+                        <h2 class="panel-title">TICKET ATTACHMENTS</h2>
+
+                    </header>
+                    <div class="panel-body">
+                        <div class="center"><button type="button" class="btn btn-sm btn-dark btn-block" data-toggle="modal" data-target="#attachmentUpload">Upload An Attachment</button></div>
+                        <!--Upload Ticket Attachment Modal-->
+                        <div class="container">
+
+                            <!-- The Modal -->
+                            <div class="modal" id="attachmentUpload">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+
+                                        <!-- Modal Header -->
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Upload Ticket Attachment</h4>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+
+                                        <!-- Modal body -->
+                                        <div class="modal-body">
+                                            <div class="row" style="padding:20px">
+                                                @using (Html.BeginForm("Create", "TicketAttachments", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "Multipart/form-data" }))
+                                                {
+                                                    @Html.AntiForgeryToken()
+                                                    @Html.Hidden("TicketId", Model.Id)
+
+                                                    <div class="form-horizontal">
+                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                                        <div class="form-group">
+                                                            @Html.Label("Description", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                            <div class="col-lg-8">
+                                                                @Html.Editor("Descriptionn", null, new { htmlAttributes = new { @class = "form-control", style = "height:50px" } })
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="form-group">
+                                                            @Html.Label("Upload File", htmlAttributes: new { @class = "control-label col-md-3" })
+                                                            <div class="col-lg-8">
+
+                                                                @Html.TextBox("file", null, new { type = "file" })
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="form-group" style="padding-top:20px">
+                                                            <div class="col-lg-offset-3 col-lg-8">
+                                                                <button type="submit" class="btn btn-success">Upload</button>  <span><button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button></span>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal footer -->
+                                        <div class="modal-footer">
+                                            
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <hr />
+                        @{
+                            var loop = 1;
+                        }
+                        @foreach (var attach in Model.TicketAttachments.ToList())
+                        {
+                            <div class="row list" style="padding-left:20px">
+                                @attach.Description
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12"><a href="@Url.Content(attach.MediaUrl)" target="_blank"><img style="width:40px" src="@IconHelper.GetIcon(attach.MediaUrl)"> @attach.MediaUrl.Split('/')[2].Split('_')[0]</a></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-offset-8">
+                                    <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#attachmentEdit@(loop)">Edit</button>
+                                    <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#attachmentDelete@(loop)">Delete</button>
+
+                                </div>
+
+                            </div>
+                            <hr />
+                            <!--Delete Ticket Attachment Modal Popup-->
+                            <div class="container">
+                                <div class="modal" id="attachmentDelete@(loop)">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Delete Ticket Attachment</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+                                                @Html.Partial("_AttachDeletePartial", attach)
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <!--Edit Ticket Attachment Modal-->
+                            <div class="container">
+                                <div class="modal" id="attachmentEdit@(loop)">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+
+                                            <!-- Modal Header -->
+                                            <div class="modal-header">
+                                                <h4 class="modal-title">Edit Ticket Attachment Description</h4>
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            </div>
+
+                                            <!-- Modal body -->
+                                            <div class="modal-body">
+
+                                                @Html.Partial("_AttachEditPartial", attach)
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            loop++;
+
+                        }
+
+
+
+
+                    </div>
+                </section>
+            </div>
+
+            <!--Created Updated Date-->
+            <div class="col-md-6">
+                <section class="panel panel-success">
+                    <header class="panel-heading">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+
+                        <h2 class="panel-title">
+                            TICKET CREATED/UPDATED
+
+                        </h2>
+                    </header>
+                    <div class="panel-body">
+                        <div class="col-md-offset-1 text-bold">
+                            <h4 class="hthree"><i class="fa fa-eye"></i> Quick Info</h4>
+                            <ul class="list">
+                                <li>
+                                    Created On:  @Html.DisplayFor(model => model.Created)
+                                </li>
+                                <li>
+                                    Updated On:   @Html.DisplayFor(model => model.Updated)
+                                </li>
+
+
+                            </ul>
+                        </div>
+
+
+                    </div>
+                </section>
+            </div>
+
+
+        </div>
+
+        <!--Ticket Comments/Ticket Histories-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel-accordion">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+
+                            <i class="fa fa-comment"></i> COMMENTS
+
+                        </h4>
+                    </div>
+                    <div id="comment" class="accordion-body">
+                        <div class="panel-body">
+                            <div class="row">
+
+                                @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.Hidden("TicketId", Model.Id)
+
+                                    <div class="form-horizontal">
+
+                                        <div class="form-group">
+
+                                            <div class="col-md-offset-2 col-md-8">
+                                                @Html.Editor("Comment", new { htmlAttributes = new { @class = "form-control", placeholder = "Add a new comment", style = "height: 70px" } })
+
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-offset-5 col-md-1">
+                                                <button type="submit" class="btn btn-success">Post</button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+
+                            </div>
+                            <div class="row">
+                                @{
+                                    loop = 1;
+                                }
+
+                                @foreach (var coment in Model.TicketComments.ToList())
+
+                                {
+                                    <div class="col-md-6">
+                                        <ul class="simple-user-list mb-xlg">
+                                            <li>
+                                                <figure class="image rounded">
+                                                    <img src="@(coment.Ticket.OwnerUser.AvatarPath)" width="45" height="60" alt="user" class="img-circle">
+                                                </figure>
+                                                <span class="comment">@coment.Ticket.OwnerUser.FullName</span><br />
+                                                <span class="comment">@coment.Comment</span><br />
+
+                                                <span class="demologin">@coment.Created</span>
+                                            </li>
+                                            <li style="padding-left:65px">
+                                                <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#commentEdit@(loop)">Edit</button>  <span> <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#commentDelete@(loop)">Delete</button></span>
+
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                    <!--Edit Ticket comment Modal-->
+                                    <div class="container">
+                                        <div class="modal" id="commentEdit@(loop)">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Edit Comment</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        @Html.Partial("_CommentEditPartial", coment)
+
+                                                    </div>
+
+                                                    <!-- Modal footer -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="container">
+                                        <div class="modal" id="commentDelete@(loop)">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        @Html.Partial("_CommentDeletePartial", coment)
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                    </div>
+
+
+
+                                    loop++;
+
+                                }
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6" style="padding-top:50px">
+
+                <!--Table-->
+                <table class="table table-striped table-bordered" id="dataTable" style="width:100%">
+
+                    <thead>
+                        <tr>
+
+                            <th>
+                                @Html.DisplayName("Property")
+                            </th>
+                            <th>
+                                @Html.DisplayName("OldValue")
+                            </th>
+                            <th>
+                                @Html.DisplayName("NewValue")
+                            </th>
+
+                            <th>
+                                @Html.DisplayName("Updated")
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model.TicketHistories)
+                        {
+                            <tr>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Property)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.OldValue)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NewValue)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Changed)
+                                </td>
+
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+    </section>
+
+
+
+
+
+@section Scripts{
+    @*<script>
+        $(".btnEdit").on("click", function () {
+
+            var comment = $(this).closest("ul").find(".targetComment").text();
+            $("#commentBody").text(comment);
+
+        });
+    </script>*@
+    
+    }
+
+
+
+
+
+
+
+
+
+
