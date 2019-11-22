@@ -46,7 +46,7 @@ namespace Project_3.Helpers
                 var mailMsg = new MailMessage(senderEmail, model.Email)
                 {
                     Subject = "Account Confirmation",
-                    Body = $"Please <a href=\"{callbackUrl}\"> Click here! <a/>  to confirm your account",
+                    Body = $" :) Thank you for joining. Please <a href=\"{callbackUrl}\"> Click here! <a/>  to confirm your account.",
                     IsBodyHtml = true
 
                 };
