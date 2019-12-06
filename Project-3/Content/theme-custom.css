@@ -1,4 +1,15 @@
 /* Add here all your CSS customizations */
+
+
+
+
+
+
+
+
+
+
+
 .dash {
     
     background-color: #f1efe9;
@@ -17,7 +28,8 @@
 }
 th {
     background-color: cadetblue;
-    font-size: 2vw;
+    font-size: 20px;
+    line-height: 24px;
     color: wheat;
     font-variant: small-caps;
    
@@ -30,7 +42,7 @@ dd {
 }
 .customlogo {
     color: #ae1664;
-    font-size: 2vw;
+    font-size: 30px;
     font-weight: 900;
   
 }
@@ -42,7 +54,13 @@ td {
     font-weight: 500;
 }
 .htwo {
-    font-size: 2vw;
+    font-size: 30px;
+    color: #28072c;
+    text-align: center;
+    font-weight: 900;
+}
+.h22 {
+    font-size: 20px;
     color: #28072c;
     text-align: center;
     font-weight: 900;

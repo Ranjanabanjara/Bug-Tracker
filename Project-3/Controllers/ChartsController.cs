@@ -13,16 +13,18 @@ namespace Project_3.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         private RoleHelper roleHelper = new RoleHelper();
-
+        private TicketHelper ticketHelper = new TicketHelper();
         public JsonResult BarChartData()
         {
+            
             var myData = new List<BarChart>();
             BarChart data = null;
             foreach (var priority in db.TicketPriorities.ToList())
             {
+                var tickets = ticketHelper.ListMyTickets();
                 data = new BarChart();
                 data.label = priority.PriorityName;
-                data.value = db.Tickets.Where(t => t.TicketPriority.PriorityName == priority.PriorityName).Count();
+                data.value = tickets.Where(t => t.TicketPriority.PriorityName == priority.PriorityName).Count();
                 myData.Add(data);
             }
 
@@ -32,8 +34,8 @@ namespace Project_3.Controllers
         public JsonResult PieChartData()
         {
 
-            var colors = new string[6]{ "blue", "red", "green", "yellow", "purple", "pink"};
-            var tickets = db.Tickets.ToList();
+            var colors = new string[6]{ "#ef1325", "#db30d0", "#0f1dbb", "#29ddcb", "#f1a71d", "#1db427" };
+            var tickets = ticketHelper.ListMyTickets();         
             var pieData = new List<PieChart>();
             var index = 0;
             foreach(var priority in db.TicketPriorities.ToList())
@@ -51,36 +53,14 @@ namespace Project_3.Controllers
 
             }
             
-
-
             return Json(pieData);
         }
 
         public JsonResult LiquidChartData()
         {
-            var userId = User.Identity.GetUserId();
-            var myRole = roleHelper.ListUserRoles(userId).FirstOrDefault();
-            var myTickets = new List<Ticket>();
-
-            switch (myRole)
-            {
-
-                case "Developer":
-                    myTickets = db.Tickets.Where(t => t.AssignedToUserId == userId).ToList();
-                    break;
-                case "Submitter":
-                    myTickets = db.Tickets.Where(t => t.OwnerUserId == userId).ToList();
-                    break;
-                case "ProjectManager":
-                    //myTickets are going to be all the Tickets on all the Projects I am on.
-                    myTickets = db.Users.Find(userId).Projects.SelectMany(t => t.Tickets).ToList();
-                    break;
-                case "DemoAdmin":
-                    myTickets = db.Tickets.ToList();
-                    break;
-            }
-
-            var totalTicketCount = myTickets.Count();
+  
+            var myTickets = ticketHelper.ListMyTickets();
+            var totalTicketCount = ticketHelper.ListMyTickets().Count();
             List<TicketTypeLiquidChartViewModel> resultList = myTickets.GroupBy(t => t.TicketType.TypeName).Select(g => new TicketTypeLiquidChartViewModel
             {
                 TypeName = g.Key,

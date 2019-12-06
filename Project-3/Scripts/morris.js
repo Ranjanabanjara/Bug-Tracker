@@ -1405,9 +1405,9 @@ Licensed under the BSD-2-Clause License.
     };
 
     Bar.prototype.defaults = {
-      barSizeRatio: 0.75,
+      barSizeRatio: 0.5,
       barGap: 3,
-      barColors: ['#0b62a4', '#7a92a3', '#4da74d', '#afd8f8', '#edc240', '#cb4b4b', '#9440ed'],
+        barColors: ['#a94442', '#8d1295', '#4da74d', '#afd8f8', '#428bca', '#cb4b4b', '#3c763d'],
       barOpacity: 1.0,
       barRadius: [0, 0, 0, 0],
       xLabelMargin: 50

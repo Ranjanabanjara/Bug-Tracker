@@ -15,7 +15,7 @@ namespace Project_3.Helpers
         {
             return db.TicketStatuses.FirstOrDefault(ts => ts.StatusName == "open").Id;
         }
-
+   
         public List<Ticket> ListMyTickets()
         {
             var myTickets = new List<Ticket>();
@@ -42,7 +42,7 @@ namespace Project_3.Helpers
             }
 
 
-            return myTickets; ;
+            return myTickets; 
         }
 
     

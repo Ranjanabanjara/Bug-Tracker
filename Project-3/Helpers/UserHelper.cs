@@ -11,18 +11,24 @@ namespace Project_3.Helpers
     public class UserHelper
     {
         private static ApplicationDbContext db = new ApplicationDbContext();
-        
-        public static string GetAvatarPath()
+        private  ApplicationDbContext db2 = new ApplicationDbContext();
+       
+        public string GetAvatarPath()
         {
-            return db.Users.Find(HttpContext.Current.User.Identity.GetUserId()).AvatarPath;
+            return db2.Users.Find(HttpContext.Current.User.Identity.GetUserId()).AvatarPath;
         }
-        public static string GetUserFirstName()
+
+        public static string GetUserEmail()
         {
-            return db.Users.Find(HttpContext.Current.User.Identity.GetUserId()).FirstName;
+            return db.Users.Find(HttpContext.Current.User.Identity.GetUserId()).UserName;
         }
-        public static string GetUserLastName()
+        public string GetUserFirstName()
         {
-            return db.Users.Find(HttpContext.Current.User.Identity.GetUserId()).LastName;
+            return db2.Users.Find(HttpContext.Current.User.Identity.GetUserId()).FirstName;
+        }
+        public  string GetUserLastName()
+        {
+            return db2.Users.Find(HttpContext.Current.User.Identity.GetUserId()).LastName;
         }
         public static ApplicationUser GetUserId()
         {

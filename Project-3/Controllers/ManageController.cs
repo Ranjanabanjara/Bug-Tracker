@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -6,6 +7,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
+using Project_3.Helpers;
 using Project_3.Models;
 
 namespace Project_3.Controllers
@@ -26,7 +28,7 @@ namespace Project_3.Controllers
         {
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-                : message == ManageMessageId.IncorrectPassword ? "Your password new password and old password doesn't match, please try again."
+                : message == ManageMessageId.IncorrectPassword ? "Your new password and old password doesn't match, please try again."
                  : message == ManageMessageId.ChangeInfoSuccess ? "Your Personal Information has been changed."
                 : "";
 
@@ -42,15 +44,31 @@ namespace Project_3.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangePersonalInfo(UserProfileViewModel modal)
+        public ActionResult ChangePersonalInfo(UserProfileViewModel modal, HttpPostedFileBase Avatar)
         {
-            var EditedUser = db.Users.Find(User.Identity.GetUserId());
-            EditedUser.FirstName = modal.FirstName;
-            EditedUser.LastName = modal.LastName;
-            EditedUser.DisplayName = modal.DisplayName;
-            db.SaveChanges();
-          
-
+            if (ModelState.IsValid)
+            {
+                var EditedUser = db.Users.Find(User.Identity.GetUserId());
+                EditedUser.FirstName = modal.FirstName;
+                EditedUser.LastName = modal.LastName;
+                EditedUser.DisplayName = modal.DisplayName;
+                EditedUser.AvatarPath = EditedUser.AvatarPath;
+                if (Avatar != null)
+                {
+                    if (ImageUploadValidator.IsWebFriendlyImage(Avatar))
+                    {
+                        var fileName = Path.GetFileName(Avatar.FileName);
+                        var onlyFilename = Path.GetFileNameWithoutExtension(fileName);
+                        onlyFilename = StringUtilities.URLFriendly(onlyFilename);
+                        fileName = $"{onlyFilename}_{DateTime.Now.Ticks}{Path.GetExtension(fileName)}";
+                        Avatar.SaveAs(Path.Combine(Server.MapPath("~/Avatars/"), fileName));
+                        EditedUser.AvatarPath = "/Avatars/" + fileName;
+                    }
+                }
+                db.SaveChanges();
+                return RedirectToAction("ChangePersonalInfo", "Manage", new { Message = ManageMessageId.ChangeInfoSuccess });
+            }
+            
             return View(modal);
 
         }

@@ -65,44 +65,29 @@ namespace Project_3.Controllers
             
         // GET: Projects
         
-        public ActionResult Index()
+        public ActionResult Index(string badProj)
         {
-            var user = db.Users.Find(User.Identity.GetUserId());
-            var userRole = roleHelper.ListUserRoles(user.Id).FirstOrDefault();
-            if (userRole == "Admin")
+            List<Project> myProjects = new List<Project>();
+            if (!string.IsNullOrEmpty(badProj))
             {
-                return View(db.Projects.ToList());
-            }
-            else if (userRole == "DemoAdmin")
-
-            {
-
-                return View(db.Projects.ToList());
-
-            }
-
-            else if (userRole == "ProjectManager")
-
-            {
-
-                return View(user.Projects.ToList());
-
-            }
-            else if (userRole == "Developer")
-            {
-                return View(user.Projects.ToList());
-            }
-            else if(userRole == "Submitter")
-            {
-                return View(user.Projects.ToList());
+                return View(projectHelper.ProjectsMissingRoles().ToList());
             }
             else
             {
-                return View();
+                var userId = User.Identity.GetUserId();
+                var user = db.Users.Find(userId);
+                var userRole = roleHelper.ListUserRoles(user.Id).FirstOrDefault();
+                if (userRole == "DemoAdmin" || userRole == "Admin")
+                {
+                    return View(db.Projects.ToList());
+                }
+
+                return View(projectHelper.ListUserProjects(userId).ToList());
+
             }
-           
+          
         }
-      
+
 
         // GET: Projects/Details/5
         public ActionResult Details(int? id)
@@ -118,7 +103,7 @@ namespace Project_3.Controllers
             }
             return View(project);
         }
-
+        [Authorize(Roles = "DemoAdmin")]
         // GET: Projects/Create
         public ActionResult Create()
         {
@@ -128,12 +113,14 @@ namespace Project_3.Controllers
         // POST: Projects/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+      
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,ProjectName,Description,Created")] Project project)
         {
             if (ModelState.IsValid)
             {
+
                 project.Created = DateTime.Now;
                 db.Projects.Add(project);
                 db.SaveChanges();

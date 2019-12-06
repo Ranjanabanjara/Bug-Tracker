@@ -60,33 +60,34 @@
                             {
                                 @Html.AntiForgeryToken()
                                 @Html.ValidationSummary("", new { @class = "text-danger" })
-                                <div class="form-group mb-lg">
-                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control input-lg", placeholder = "Firstname" })
+                            <div class="form-group mb-lg">
+                                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control input-lg", placeholder = "Firstname" })
+                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group mb-lg">
+                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-lg", placeholder = "Lastname" })
+                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group mb-lg">
+                                @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control input-lg", placeholder = "Displayname" })
+                                @Html.ValidationMessageFor(m => m.DisplayName, "", new { @class = "text-danger" })
+                            </div>
 
-                                </div>
-                                <div class="form-group mb-lg">
-                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control input-lg", placeholder = "Lastname" })
-
-                                </div>
-                                <div class="form-group mb-lg">
-                                    @Html.TextBoxFor(m => m.DisplayName, new { @class = "form-control input-lg", placeholder = "Displayname" })
-
-                                </div>
-
-                                <div class="form-group mb-lg">
-                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-lg", placeholder = "Email" })
-
-                                </div>
+                            <div class="form-group mb-lg">
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control input-lg", placeholder = "Email" })
+                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            </div>
 
 
                                 <div class="form-group mb-none">
                                     <div class="row">
                                         <div class="col-sm-6 mb-lg">
                                             @Html.PasswordFor(m => m.Password, new { @class = "form-control input-lg", placeholder = "Password" })
-
+                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
                                         </div>
                                         <div class="col-sm-6 mb-lg">
                                             @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control input-lg", placeholder = "Confirm Password" })
+                                            @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>

@@ -34,13 +34,14 @@
                 RoleHelper roleHelper = new RoleHelper();
                 ProjectHelper projectHelper = new ProjectHelper();
                 TicketHelper ticketHelper = new TicketHelper();
+                 UserHelper userHelper = new UserHelper();
             }
             <section class="panel">
                 <div class="panel-body">
                     <div class="thumb-info mb-md">
-                        <img src="@UserHelper.GetAvatarPath()" class="rounded img-responsive" alt="Profile Picture">
+                        <img src="@userHelper.GetAvatarPath()" class="rounded img-responsive" alt="Profile Picture">
                         <div class="thumb-info-title">
-                            <span class="thumb-info-inner">@UserHelper.GetUserFirstName()</span>
+                            <span class="thumb-info-inner">@userHelper.GetUserFirstName()</span>
 
                             @if (User.IsInRole("Admin"))
                             {
@@ -87,9 +88,9 @@
                     <hr class="dotted short">
 
                     <div class="social-icons-list text-center">
-                        <a rel="tooltip" data-placement="bottom" target="_blank" href="http://www.facebook.com" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
-                        <a rel="tooltip" data-placement="bottom" href="http://www.twitter.com" data-original-title="Twitter"><i class="fa fa-twitter"></i><span>Twitter</span></a>
-                        <a rel="tooltip" data-placement="bottom" href="http://www.linkedin.com" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
+                        <a rel="tooltip" data-placement="bottom" target="_blank" href="https://www.facebook.com/ranju.banjara" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
+             
+                        <a rel="tooltip" data-placement="bottom" href="https://www.linkedin.com/in/ranjana-banjara-241860125/" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
                     </div>
 
                 </div>
@@ -97,7 +98,7 @@
 
         </div>
         <div class="col-md-8 col-lg-6">
-            <h2 class="text-success">@ViewBag.StatusMessage</h2>
+            <h4 class="text-danger">@ViewBag.StatusMessage</h4>
 
             <div class="tabs">
                 <ul class="nav nav-tabs tabs-primary">
@@ -107,50 +108,61 @@
                     <li>
                         <a href="#edit" data-toggle="tab">Change Password</a>
                     </li>
+                   
 
                 </ul>
                 <div class="tab-content">
                     <!--change personal information-->
                     <div id="overview" class="tab-pane active">
 
-                        @using (Html.BeginForm("ChangePersonalInfo" ,"Manage", FormMethod.Post, new { style = "width:90%;" }))
+                        @using (Html.BeginForm("ChangePersonalInfo", "Manage", FormMethod.Post, new { style = "width:90%;", enctype="Multipart/form-data"}))
                         {
                             @Html.AntiForgeryToken()
                             @Html.ValidationSummary("", new { @class = "text-danger" })
-                            <h4 class="mb-xlg">Personal Information</h4>
-                            <fieldset>
-                                <h2 class="text-success">@ViewBag.StatusMessage</h2>
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
-                                    <div class="col-md-8">
-                                        @Html.TextAreaFor(m => m.FirstName, new { @class = "form-control" })
-                                    </div>
-                                </div>
 
+                        <fieldset>
 
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.LastName, new { @class = "col-md-3 control-label" })
-                                    <div class="col-md-8">
-                                        @Html.TextAreaFor(m => m.LastName, new { @class = "form-control" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(m => m.DisplayName, new { @class = "col-md-3 control-label" })
-                                    <div class="col-md-8">
-                                        @Html.TextAreaFor(m => m.DisplayName, new { @class = "form-control" })
-                                    </div>
-                                </div>
-                            </fieldset>
-                            <hr class="dotted tall">
-                            <div class="panel-footer">
-                                <div class="row">
-                                    <div class="col-md-3 col-md-offset-3">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-
-                                    </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.FirstName, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(m => m.FirstName, new { @class = "form-control" })
                                 </div>
                             </div>
+
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.LastName, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(m => m.LastName, new { @class = "form-control" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.DisplayName, new { @class = "col-md-3 control-label" })
+                                <div class="col-md-8">
+                                    @Html.TextAreaFor(m => m.DisplayName, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                              
+                                    @Html.LabelFor(m => m.AvatarPath,"Avatar" ,new { @class = "col-md-3 control-label" })
+                               
+                                <div class="col-md-6">
+
+                                    <span> <i class="fa fa-user"></i> @Html.TextBox("Avatar", null, new { type = "file", name = "Avatar" })</span>
+
+                                </div>
+                            </div>
+                        </fieldset>
+
+
+                            <div class="row pt-xs">
+                                <div class="col-md-offset-3 col-md-4">
+                                    <button type="submit" class="btn btn-danger">Save Changes</button>
+
+                                </div>
+                            </div>
+
                         }
                     </div>
                     <!--change password information-->
@@ -159,9 +171,13 @@
                         @Html.Partial("_ChangePassword", new ChangePasswordViewModel())
 
                     </div>
+                   
+
+
                 </div>
             </div>
-        </div>
+         </div>
     </div>
+    
 
 </section>

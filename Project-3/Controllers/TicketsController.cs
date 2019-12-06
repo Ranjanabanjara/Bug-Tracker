@@ -18,6 +18,7 @@ namespace Project_3.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         private TicketHelper ticketHelper = new TicketHelper();
         private RoleHelper roleHelper = new RoleHelper();
+        private ProjectHelper projectHelper = new ProjectHelper();
         private TicketHistoryHelper recordHelper = new TicketHistoryHelper();
         private NotificationHelper notificationHelper = new NotificationHelper();
 
@@ -67,20 +68,23 @@ namespace Project_3.Controllers
 
 
         // GET: Tickets
-        [Authorize]
-        public ActionResult Index()
+        [Authorize]     
+       
+        public ActionResult Index(string unassignedTicketsOnly)
         {
-            //var tickets = db.Tickets.Include(t => t.AssignedToUser)
-            //    .Include(t => t.OwnerUser).Include(t => t.Project)
-            //    .Include(t => t.TicketPriority)
-            //    .Include(t => t.TicketStatus)
-            //    .Include(t => t.TicketType);
 
+            if (!string.IsNullOrEmpty(unassignedTicketsOnly))
+            {
+                return View(ticketHelper.ListMyTickets().Where(t => t.AssignedToUserId == null));
+            }
+            else
+            {
+                return View(ticketHelper.ListMyTickets());
+            }
+        
 
-
-
-            return View(ticketHelper.ListMyTickets());
         }
+
 
         // GET: Tickets/Details/5
         public ActionResult Details(int? id)
@@ -100,9 +104,11 @@ namespace Project_3.Controllers
         // GET: Tickets/Create
         public ActionResult Create()
         {
+            var userId = User.Identity.GetUserId();
+            var myProjects = projectHelper.ListUserProjects(userId).ToList();
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName");
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName");
-            ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName");
+            ViewBag.ProjectId = new SelectList(myProjects, "Id", "ProjectName");
             ViewBag.TicketPriorityId = new SelectList(db.TicketPriorities, "Id", "PriorityName");
           
             ViewBag.TicketTypeId = new SelectList(db.TicketTypes, "Id", "TypeName");

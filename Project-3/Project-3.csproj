@@ -217,8 +217,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Avatars\art_637096910265462383.jpg" />
+    <Content Include="Avatars\bhushan_637104449316351298.jpg" />
+    <Content Include="Avatars\bhushan_637104451121051126.jpg" />
+    <Content Include="Avatars\bhushan_637104457327855976.jpg" />
+    <Content Include="Avatars\coderfoundry_637104454768256499.jpg" />
     <Content Include="Content\bootstrap-multiselect.css" />
     <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\component.css" />
     <Content Include="Content\datepicker3.css" />
     <Content Include="Content\default.css" />
     <Content Include="Content\font-awesome.css" />
@@ -226,6 +231,7 @@
     <Content Include="Content\jquery.dataTables.min.css" />
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\morris.css" />
+    <Content Include="Content\barstyle.css" />
     <Content Include="Content\theme-custom.css" />
     <Content Include="Content\theme.css" />
     <Content Include="favicon.ico" />
@@ -251,6 +257,8 @@
     <Content Include="Images\xlsx.png" />
     <Content Include="Images\xml.png" />
     <Content Include="Images\zip.png" />
+    <Content Include="Scripts\adminlte.min.js" />
+    <Content Include="Scripts\bars.js" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-multiselect.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -268,6 +276,7 @@
     <Content Include="Scripts\jquery.flot.resize.js" />
     <Content Include="Scripts\jquery.flot.tooltip.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jquery.nicescroll.js" />
     <Content Include="Scripts\jquery.placeholder.js" />
     <Content Include="Scripts\jquery.sparkline.js" />
     <Content Include="Scripts\jquery.ui.touch-punch.js" />
@@ -277,6 +286,7 @@
     <Content Include="Scripts\morris.js" />
     <Content Include="Scripts\nanoscroller.js" />
     <Content Include="Scripts\raphael.js" />
+    <Content Include="Scripts\scripts.js" />
     <Content Include="Scripts\snap.svg.js" />
     <Content Include="Scripts\theme.custom.js" />
     <Content Include="Scripts\theme.init.js" />
@@ -294,22 +304,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Dashboard.cshtml" />
-    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
-    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
-    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
-    <Content Include="Views\Account\SendCode.cshtml" />
-    <Content Include="Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
-    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Tickets\Create.cshtml" />
     <Content Include="Views\Tickets\Delete.cshtml" />
@@ -319,21 +320,6 @@
     <Content Include="Views\TicketHistories\Index.cshtml" />
     <Content Include="Views\TicketNotifications\Delete.cshtml" />
     <Content Include="Views\TicketNotifications\Index.cshtml" />
-    <Content Include="Views\TicketPriorities\Create.cshtml" />
-    <Content Include="Views\TicketPriorities\Delete.cshtml" />
-    <Content Include="Views\TicketPriorities\Details.cshtml" />
-    <Content Include="Views\TicketPriorities\Edit.cshtml" />
-    <Content Include="Views\TicketPriorities\Index.cshtml" />
-    <Content Include="Views\TicketStatus\Create.cshtml" />
-    <Content Include="Views\TicketStatus\Delete.cshtml" />
-    <Content Include="Views\TicketStatus\Details.cshtml" />
-    <Content Include="Views\TicketStatus\Edit.cshtml" />
-    <Content Include="Views\TicketStatus\Index.cshtml" />
-    <Content Include="Views\TicketTypes\Create.cshtml" />
-    <Content Include="Views\TicketTypes\Delete.cshtml" />
-    <Content Include="Views\TicketTypes\Details.cshtml" />
-    <Content Include="Views\TicketTypes\Edit.cshtml" />
-    <Content Include="Views\TicketTypes\Index.cshtml" />
     <Content Include="Views\Projects\Create.cshtml" />
     <Content Include="Views\Projects\Edit.cshtml" />
     <Content Include="Views\Projects\Index.cshtml" />
@@ -363,8 +349,8 @@
     <Content Include="Views\Shared\_CommentDeletePartial.cshtml" />
     <Content Include="Views\Tickets\AssignTicket.cshtml" />
     <None Include="packages.config" />
-    <None Include="Properties\PublishProfiles\BugTrackerRB - Web Deploy.pubxml" />
     <Content Include="Views\Shared\_ManageUsersPartial.cshtml" />
+    <None Include="Properties\PublishProfiles\rbanjaraBugtracker - Web Deploy.pubxml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -11,6 +11,7 @@ namespace Project_3.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string DisplayName { get; set; }
+        public string AvatarPath { get; set; }
 
     }
     public class ManageRoleViewModel

@@ -477,7 +477,7 @@
                     </div>
                     <div id="comment" class="accordion-body">
                         <div class="panel-body">
-                            <div class="row">
+                            <div class="row pl-sm pr-sm pb-sm">
 
                                 @using (Html.BeginForm("Create", "TicketComments", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                                 {
@@ -512,19 +512,36 @@
                                 @foreach (var coment in Model.TicketComments.ToList())
 
                                 {
-                                    <div class="col-md-6">
+                                    <div class="col-sm-12">
                                         <ul class="simple-user-list mb-xlg">
                                             <li>
-                                                <figure class="image rounded">
-                                                    <img src="@(coment.Ticket.OwnerUser.AvatarPath)" width="45" height="60" alt="user" class="img-circle">
-                                                </figure>
-                                                <span class="comment">@coment.Ticket.OwnerUser.FullName</span><br />
-                                                <span class="comment">@coment.Comment</span><br />
+                                                <div class="row">
+                                                   
+                                                    <div class="col-xs-1">
+                                                        <figure class="image rounded">
+                                                            <img src="@(coment.Ticket.OwnerUser.AvatarPath)" width="45" height="60" alt="user" class="img-circle">
+                                                        </figure>
+                                                        
+                                                    </div>
+                                                    <div class="col-xs-10">
+                                                        <span class="comment">@coment.Ticket.OwnerUser.FullName</span><br />
+                                                        <span class="comment">@coment.Comment</span><br />
+                                                          <span class="demologin">@coment.Created</span>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-offset-1">
+                                                        <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#commentEdit@(loop)">Edit</button>  <span> <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#commentDelete@(loop)">Delete</button></span>
+                                                    </div>
+                                                </div>
+                                               
+                                               
+                                               
 
-                                                <span class="demologin">@coment.Created</span>
+                                                
                                             </li>
                                             <li style="padding-left:65px">
-                                                <button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#commentEdit@(loop)">Edit</button>  <span> <button type="button" class="btn btn-xs btn-danger" data-toggle="modal" data-target="#commentDelete@(loop)">Delete</button></span>
+                                               
 
                                             </li>
 

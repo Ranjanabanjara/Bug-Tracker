@@ -1,7 +1,14 @@
-﻿
+﻿@using Project_3.Helpers;
+@using Project_3.Models;
+@using Microsoft.AspNet.Identity
 
 @{
     ViewBag.Title = "Dashboard";
+    ProjectHelper projectHelper = new ProjectHelper();
+    TicketHelper ticketHelper = new TicketHelper();
+    ApplicationDbContext db = new ApplicationDbContext();
+    ApplicationUser currentUser = db.Users.Find(User.Identity.GetUserId());
+
 }
 
 
@@ -25,110 +32,222 @@
             </div>
         </header>
         <!--quick info-->
-        <div class="row">
-            <div class="col-md-3">
-                <section class="panel">
-                    <div class="panel-body bg-primary">
-                        <div class="widget-summary">
-                            <div class="widget-summary-col widget-summary-col-icon">
-                                <div class="summary-icon">
-                                    <i class="fa fa-pencil-square-o"></i>
-                                </div>
-                            </div>
-                            <div class="widget-summary-col">
-                                <div class="summary">
-                                    <h4 class="title">My Projects</h4>
-                                    <div class="info">
-                                        <strong class="amount"></strong>
-                                    </div>
-                                </div>
-                                <div class="summary-footer">
-                                    <a class="text-uppercase" href="@Url.Action("Index", "Projects")">View</a>
-                                </div>
+        @if (User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager"))
+        {
+    <div class="row">
+        <div class="col-md-3">
+            <section class="panel">
+                <div class="panel-body bg-tertiary">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-life-ring"></i>
                             </div>
                         </div>
-                    </div>
-                </section>
-            </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">
+                                    Unassigned<br />
+                                    Projects
+                                </h4>
+                                <div class="info">
+                                    <strong class="amount">@projectHelper.ProjectsMissingRoles().Count</strong>
+                                </div>
+                                <div class="summary-footer">
+                                    <a href="@Url.Action("Index", "Projects", new { badProj = "True" })">View</a>
+                                </div>
 
-            <div class="col-md-3">
-                <section class="panel">
-                    <div class="panel-body bg-secondary">
-                        <div class="widget-summary">
-                            <div class="widget-summary-col widget-summary-col-icon">
-                                <div class="summary-icon">
-                                    <i class="fa fa-life-ring"></i>
-                                </div>
                             </div>
-                            <div class="widget-summary-col">
-                                <div class="summary">
-                                    <h4 class="title">My Tickets</h4>
-                                    <div class="info">
-                                        <strong class="amount">5</strong>
-                                    </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-3">
+            <section class="panel">
+                <div class="panel-body bg-tertiary">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">
+                                    Unassigned<br />
+                                    Tickets
+                                </h4>
+                                <div class="info">
+                                    <strong class="amount">@ticketHelper.ListMyTickets().Where(t => t.AssignedToUserId == null).Count()</strong>
                                 </div>
                                 <div class="summary-footer">
-                                    <a class="text-uppercase" href="@Url.Action("Index", "Tickets")">View</a>
+                                    <a href="@Url.Action("Index", "Tickets", new { unassignedTicketsOnly = "True" })">View</a>
                                 </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="col-md-3">
+            <section class="panel">
+                <div class="panel-body bg-secondary">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">Total Tickets</h4>
+                                <div class="info">
+                                    <strong class="amount">@ticketHelper.ListMyTickets().Count()</strong>
+                                </div>
+                            </div>
+                            <div class="summary-footer">
+                                <a class="text-uppercase" href="@Url.Action("Index", "Tickets")">View</a>
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
-            <div class="col-md-4">
-                <section class="panel-featured-left panel-featured-warning">
-                    <div class="panel-body">
-                        <div class="row panel-body">
+                </div>
+            </section>
+        </div>
+
+
+
+        <div class="col-md-3">
+            <section class="panel">
+                <div class="panel-body bg-success">
+                    <div class="widget-summary">
+                        <div class="widget-summary-col widget-summary-col-icon">
+                            <div class="summary-icon">
+                                <i class="fa fa-life-ring"></i>
+                            </div>
+                        </div>
+                        <div class="widget-summary-col">
+                            <div class="summary">
+                                <h4 class="title">
+                                    Tickets<br />
+                                    In Progress
+                                </h4>
+                                <div class="info">
+                                    <strong class="amount">@ticketHelper.ListMyTickets().Where(t => t.TicketStatus.StatusName == "In Progress").Count()</strong>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+    </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-4">
+                    <section class="panel">
+                        <div class="panel-body bg-primary">
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
-                                    <div class="summary-icon bg-warning">
-                                        <i class="fa fa-bell"></i>
+                                    <div class="summary-icon">
+                                        <i class="fa fa-pencil-square-o"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
                                     <div class="summary">
-                                        <h4 class="hthree">Unassigned Tickets </h4>
-                                        <div class="info">
-                                            <strong class="amount">5</strong>
+                                        <h4 class="title">My Projects</h4>
+                                        @if (User.IsInRole("DemoAdmin"))
+                                        {
+                                            <div class="info">
+                                                <strong class="amount">@db.Projects.Count()</strong>
+                                            </div>
 
-                                        </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="info">
+                                                <strong class="amount">@projectHelper.ListUserProjects(UserHelper.GetUserId().Id).Count()</strong>
+                                            </div>
+
+                                        }
+
                                     </div>
-
+                                    <div class="summary-footer">
+                                        <a class="text-uppercase" href="@Url.Action("Index", "Projects")">View</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="list" style="padding-left:20px">
+                    </section>
+                </div>
 
-                                <i class="fa fa-play-circle"></i> <a>Assign</a>  
+                <div class="col-md-4">
+                    <section class="panel">
+                        <div class="panel-body bg-secondary">
+                            <div class="widget-summary">
+                                <div class="widget-summary-col widget-summary-col-icon">
+                                    <div class="summary-icon">
+                                        <i class="fa fa-life-ring"></i>
+                                    </div>
+                                </div>
+                                <div class="widget-summary-col">
+                                    <div class="summary">
+                                        <h4 class="title">My Tickets</h4>
+                                        <div class="info">
+                                            <strong class="amount">@ticketHelper.ListMyTickets().Count()</strong>
+                                        </div>
+                                    </div>
+                                    <div class="summary-footer">
+                                        <a class="text-uppercase" href="@Url.Action("Index", "Tickets")">View</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </section>
-            </div>
+                    </section>
+                </div>
 
-        </div>
+
+            </div>
+        }
+
+
         <!--Ticket Type Liquid Charts-->
         <div class="row">
             <div class="col-md-12">
                 <div class="panel">
-                    <div class="panel-heading">
-                        Ticket Type
+                    <div class="panel-heading htwo">
+                        <div class="panel-actions">
+                            <a href="#" class="fa fa-caret-down"></a>
+                            <a href="#" class="fa fa-times"></a>
+                        </div>
+
+                        <h4 class="panel-title h22">Tickets (%) Based on Ticket Types</h4>
+                        <p class="panel-subtitle h22">Displayed in Liquid Chart</p>
 
                     </div>
                     <div class="panel-body" aria-expanded="true" id="ticket-type-panel">
                         <div class="row">
                             <div class="col-md-3">
-                                <div class="tickets-type-liquid-chart" style="height: 460px"></div>
+                                <div class="tickets-type-liquid-chart" style="height: 350px"></div>
                             </div>
                             <div class="col-md-3">
-                                <div class="tickets-type-liquid-chart" style="height: 460px"></div>
+                                <div class="tickets-type-liquid-chart" style="height: 350px"></div>
                             </div>
                             <div class="col-md-3">
-                                <div class="tickets-type-liquid-chart" style="height: 460px"></div>
+                                <div class="tickets-type-liquid-chart" style="height: 350px"></div>
                             </div>
                             <div class="col-md-3">
-                                <div class="tickets-type-liquid-chart" style="height: 460px"></div>
+                                <div class="tickets-type-liquid-chart" style="height: 350px"></div>
                             </div>
                         </div>
                     </div>
@@ -145,8 +264,8 @@
                             <a href="#" class="fa fa-times"></a>
                         </div>
 
-                        <h2 class="panel-title">Ticket Chart</h2>
-                        <p class="panel-subtitle">Pie Chart</p>
+                        <h4 class="panel-title h22">Tickets (%) Based on Ticket Priorites</h4>
+                        <p class="panel-subtitle h22">Displayed in Pie Chart</p>
                     </header>
                     <div class="panel-body">
 
@@ -159,6 +278,7 @@
                     </div>
                 </section>
             </div>
+
             <div class="col-md-6">
                 <section class="panel">
                     <header class="panel-heading">
@@ -167,20 +287,70 @@
                             <a href="#" class="fa fa-times"></a>
                         </div>
 
-                        <h2 class="panel-title">Ticket Chart</h2>
-                        <p class="panel-subtitle">Pie Chart</p>
+                        <h4 class="panel-title h22">Projects with open tickets</h4>
+                        <p class="panel-subtitle h22">Displayed in line</p>
                     </header>
                     <div class="panel-body">
 
-                        <!-- Flot: Pie -->
-                        <div class="chart chart-md" id="chartThree">
+
+                        <div class='bar_group'>
+                            @if (User.IsInRole("DemoAdmin"))
+                            {
+                                foreach (var project in db.Projects.ToList())
+                                {
+                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Completed") && !t.TicketStatus.StatusName.Equals("Archived")).Count();
+                                    if (openTicketCount != 0)
+                                    {
+                                        <div class='bar_group__bar thin' label='@project.ProjectName' show_values='true' tooltip='true' value='@openTicketCount'></div>
+                                    }
+                                }
+                            }
+                            else if (User.IsInRole("DemoManager"))
+                            {
+                                foreach (var project in currentUser.Projects.ToList())
+                                {
+                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Completed") && !t.TicketStatus.StatusName.Equals("Archived")).Count();
+                                    if (openTicketCount != 0)
+                                    {
+                                        <div class='bar_group__bar thin' label='@project.ProjectName' show_values='true' tooltip='true' value='@openTicketCount'></div>
+                                    }
+                                }
+                            }
+                            else if (User.IsInRole("Developer"))
+                            {
+                                foreach (var project in currentUser.Projects.ToList())
+                                {
+                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Completed") && !t.TicketStatus.StatusName.Equals("Archived") && t.AssignedToUserId == currentUser.Id).Count();
+                                    if (openTicketCount != 0)
+                                    {
+                                        <div class='bar_group__bar thin' label='@project.ProjectName' show_values='true' tooltip='true' value='@openTicketCount'></div>
+                                    }
+                                }
+                            }
+                            else if (User.IsInRole("Submitter"))
+                            {
+                                foreach (var project in currentUser.Projects.ToList())
+                                {
+                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Completed") && !t.TicketStatus.StatusName.Equals("Archived") && t.OwnerUserId == currentUser.Id).Count();
+                                    if (openTicketCount != 0)
+                                    {
+                                        <div class='bar_group__bar thin' label='@project.ProjectName' show_values='true' tooltip='true' value='@openTicketCount'></div>
+                                    }
+                                }
+                            }
 
                         </div>
 
-
                     </div>
+
                 </section>
             </div>
+
+
+
+
+
+
         </div>
         <!--Ticket Barchart-->
         <div class="row">
@@ -192,8 +362,8 @@
                             <a href="#" class="fa fa-times"></a>
                         </div>
 
-                        <h2 class="panel-title">Ticket Counts For Different Priorities</h2>
-
+                        <h2 class="panel-title h22">Ticket Counts Based On Ticket Priorities</h2>
+                        <p class="panel-subtitle h22">Displayed in Bar Chart</p>
                     </header>
                     <div class="panel-body">
 
@@ -216,6 +386,10 @@
 
 @section scripts{
 
+    <script src="~/Scripts/adminlte.min.js"></script>
+    <script src="~/Scripts/jquery.nicescroll.js"></script>
+    <script src="~/Scripts/bars.js"></script>
+    <script src="~/Scripts/scripts.js"></script>
     <script src="~/Scripts/raphael.js"></script>
     <script src="~/Scripts/morris.js"></script>
     <script src="~/Scripts/jquery.flot.pie.js"></script>
