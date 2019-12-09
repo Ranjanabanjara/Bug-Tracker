@@ -13,20 +13,20 @@ namespace Project_3.Helpers
         private static ApplicationDbContext db = new ApplicationDbContext();
         public void ManageNotifications(Ticket oldTicket, Ticket newTicket)
         {
-           
-            var ticketHasBeenAssigned = string.IsNullOrEmpty(oldTicket.AssignedToUserId);
-            var ticketHasBeenUnAssigned = string.IsNullOrEmpty(newTicket.AssignedToUserId);
-            
-           
+            var ticketHasBeenAssigned = oldTicket.AssignedToUserId == null && newTicket.AssignedToUserId != null;
+            var ticketHasBeenUnAssigned = oldTicket.AssignedToUserId != null && newTicket.AssignedToUserId == null;
+            var ticketHasBeenReassigned = oldTicket.AssignedToUserId != null && newTicket.AssignedToUserId != null && oldTicket.AssignedToUserId != newTicket.AssignedToUserId;
 
             if (ticketHasBeenAssigned)
                 AddAssignmentNotification(oldTicket, newTicket);
-
             else if (ticketHasBeenUnAssigned)
                 AddUnassignmentNotification(oldTicket, newTicket);
-           
+            else if (ticketHasBeenReassigned)
+                AddAssignmentNotification(oldTicket, newTicket);
+            AddUnassignmentNotification(oldTicket, newTicket);
+
         }
-    
+
 
         private void AddAssignmentNotification(Ticket oldTicket, Ticket newTicket)
         {

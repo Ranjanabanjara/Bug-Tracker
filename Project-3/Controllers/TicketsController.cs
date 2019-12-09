@@ -188,7 +188,7 @@ namespace Project_3.Controllers
                 db.SaveChanges();
                 var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
                 recordHelper.RecordHistoricalChanges(oldTicket, newTicket);
-                notificationHelper.ManageNotifications(oldTicket, newTicket);
+                //notificationHelper.ManageNotifications(oldTicket, newTicket);
 
 
                 return RedirectToAction("Index");

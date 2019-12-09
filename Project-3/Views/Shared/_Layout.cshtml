@@ -352,24 +352,37 @@
 
                                             </li>
                                         }
-                      
-                                            <li>
-                                                <a href="@Url.Action("Index", "TicketHistories")">
-                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                                    Ticket Histories
-                                                </a>
 
-                                            </li>
+                                        <li>
+                                            <a href="@Url.Action("Index", "TicketHistories")">
+                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                Ticket Histories
+                                            </a>
+
+                                        </li>
+                                        @if (User.IsInRole("Admin"))
+                                        {
                                             <li>
                                                 <a href="@Url.Action("Index", "Tickets", new { archivedTickets = "True" })">
-                                                   
+
                                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
                                                     Archived Tickets
                                                 </a>
 
                                             </li>
 
-                                        
+                                        }
+
+                                        <li>
+                                            <a href="@Url.Action("Index", "Tickets", new { archivedTickets = "True" })">
+
+                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                Archived Tickets
+                                            </a>
+
+                                        </li>
+
+
 
                                     </ul>
                                 </li>
