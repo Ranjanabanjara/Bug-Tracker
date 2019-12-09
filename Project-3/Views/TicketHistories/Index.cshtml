@@ -24,21 +24,21 @@
             </div>
         </header>
         <h2 class="htwo">TICKET HISTORIES</h2>
-        @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin"))
-        {
+       
             <!--Table-->
             <table class="table table-striped table-bordered" id="dataTable" style="width:100%">
 
                 <thead>
                     <tr>
                         <th>
-                            @Html.DisplayName("CreatedBy")
+                            @Html.DisplayName("Ticket Title")
                         </th>
-                        <th>
-                            @Html.DisplayName("EditedBy")
-                        </th>
+
                         <th>
                             @Html.DisplayName("PropertyName")
+                        </th>
+                        <th>
+                            @Html.DisplayName("ChangedBy")
                         </th>
                         <th>
                             @Html.DisplayName("ChangedFrom")
@@ -57,37 +57,35 @@
 
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Ticket.OwnerUser.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.User.FirstName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Property)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.OldValue)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NewValue)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Changed)
-                            </td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ticket.Title)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Property)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.User.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OldValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NewValue)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Changed)
+                        </td>
 
 
-                        </tr>
+                    </tr>
                     }
                 </tbody>
             </table>
 
-        }
-        else
-        {
-            <h2 class="hthree center">You can view the ticket histories of Only those tickets that has been assigned to you!</h2>
-        }
+        
+       
 
     </section>
 

@@ -232,6 +232,7 @@
     <Content Include="Content\magnific-popup.css" />
     <Content Include="Content\morris.css" />
     <Content Include="Content\barstyle.css" />
+    <Content Include="Content\pnotify.custom.css" />
     <Content Include="Content\theme-custom.css" />
     <Content Include="Content\theme.css" />
     <Content Include="favicon.ico" />
@@ -264,6 +265,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\echarts-liquidfill.min.js" />
     <Content Include="Scripts\echarts.js" />
+    <Content Include="Scripts\examples.modals.js" />
     <Content Include="Scripts\gauge.js" />
     <Content Include="Scripts\jquery-ui-1.10.4.custom.js" />
     <Content Include="Scripts\jquery.appear.js" />
@@ -285,6 +287,7 @@
     <Content Include="Scripts\modernizr.js" />
     <Content Include="Scripts\morris.js" />
     <Content Include="Scripts\nanoscroller.js" />
+    <Content Include="Scripts\pnotify.custom.js" />
     <Content Include="Scripts\raphael.js" />
     <Content Include="Scripts\scripts.js" />
     <Content Include="Scripts\snap.svg.js" />
@@ -351,6 +354,7 @@
     <None Include="packages.config" />
     <Content Include="Views\Shared\_ManageUsersPartial.cshtml" />
     <None Include="Properties\PublishProfiles\rbanjaraBugtracker - Web Deploy.pubxml" />
+    <Content Include="Views\Shared\_NotificationDeletePartial.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

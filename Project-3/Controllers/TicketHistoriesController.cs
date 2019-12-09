@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Project_3.Helpers;
 using Project_3.Models;
 
 namespace Project_3.Controllers
@@ -13,13 +14,16 @@ namespace Project_3.Controllers
     public class TicketHistoriesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+        private TicketHistoryHelper ticketHistoryHelper = new TicketHistoryHelper();
 
         // GET: TicketHistories
-       
+
         public ActionResult Index()
         {
-            var ticketHistories = db.TicketHistories.Include(t => t.Ticket).Include(t => t.User);
-            return View(ticketHistories.ToList());
+          
+            var ticketHistories = ticketHistoryHelper.TicketHistories();          
+           
+            return View(ticketHistories);
         }
 
         // GET: TicketHistories/Details/5

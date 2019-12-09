@@ -70,12 +70,19 @@ namespace Project_3.Controllers
         // GET: Tickets
         [Authorize]     
        
-        public ActionResult Index(string unassignedTicketsOnly)
+        public ActionResult Index(string unassignedTicketsOnly, string ticketInProgress, string archivedTickets)
         {
 
             if (!string.IsNullOrEmpty(unassignedTicketsOnly))
             {
                 return View(ticketHelper.ListMyTickets().Where(t => t.AssignedToUserId == null));
+            }else if (!string.IsNullOrEmpty(ticketInProgress))
+            {
+                return View(ticketHelper.ListMyTickets().Where(t => t.TicketStatus.StatusName == "In Progress"));
+            }
+            else if (!string.IsNullOrEmpty(archivedTickets))
+            {
+                return View(ticketHelper.ListAllTickets().Where(t => t.TicketStatus.StatusName == "Archived"));
             }
             else
             {
@@ -153,6 +160,7 @@ namespace Project_3.Controllers
             {
                 return HttpNotFound();
             }
+
             ViewBag.AssignedToUserId = new SelectList(db.Users, "Id", "FirstName", ticket.AssignedToUserId);
             ViewBag.OwnerUserId = new SelectList(db.Users, "Id", "FirstName", ticket.OwnerUserId);
             ViewBag.ProjectId = new SelectList(db.Projects, "Id", "ProjectName", ticket.ProjectId);
@@ -176,7 +184,6 @@ namespace Project_3.Controllers
                 var oldTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);
                 ticket.Updated = DateTime.Now;
                
-
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
                 var newTicket = db.Tickets.AsNoTracking().FirstOrDefault(t => t.Id == ticket.Id);

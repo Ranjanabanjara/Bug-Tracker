@@ -41,6 +41,8 @@
     <link href="~/Content/component.css" rel="stylesheet" />
     <link href="~/Content/barstyle.css" rel="stylesheet" />
 
+    <link href="~/Content/pnotify.custom.css" rel="stylesheet" />
+
     <!-- Specific Page Vendor CSS -->
 
     <link href="~/Content/jquery-ui-1.10.4.custom.css" rel="stylesheet" />
@@ -60,6 +62,7 @@
 
     <link href="~/Content/theme-custom.css" rel="stylesheet" />
 
+
     <!-- Head Libs -->
 
     <script src="~/Scripts/modernizr.js"></script>
@@ -71,10 +74,10 @@
     <section class="body">
         @{
             RoleHelper roleHelper = new RoleHelper();
-             UserHelper userHelper = new UserHelper();
+            UserHelper userHelper = new UserHelper();
         }
-       
-            <!-- start: header -->
+
+        <!-- start: header -->
         <header class="header">
             <!--logo-->
             <div class="logo-container">
@@ -119,8 +122,8 @@
 
                                                     @Html.AntiForgeryToken()
 
-                                                    @Html.Hidden("Id", unreadNotification.Id)
-
+                                                    @Html.Hidden("id", unreadNotification.Id)
+                                                    <button type="submit" class="btn btn-sm btn-danger pull-right"><i class="fa fa-times"></i></button>
                                                     <a href="#" class="clearfix">
                                                         <div class="image">
                                                             <span class="image"><img src="@unreadNotification.Sender.AvatarPath" height="45" alt="admin" /></span>
@@ -130,7 +133,7 @@
                                                         <span class="title">@unreadNotification.Created.ToString("MMM dd, yyyy")</span>
                                                     </a>
                                                     <br />
-                                                    <button type="submit" class="btn btn-danger">Hide</button>
+
 
                                                 }
 
@@ -151,7 +154,11 @@
                                 <hr />
 
                                 <div class="text-right">
-                                    <a href="@Url.Action("Index", "TicketNotifications")" class="view-more text-dark">Earlier</a>
+
+                                    <a href="@Url.Action("Index", "TicketNotifications")" class="view-more text-dark">
+
+                                        Older
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -163,71 +170,71 @@
                 @if (Request.IsAuthenticated)
                 {
 
-                <div id="userbox" class="userbox">
-                    <a href="#" data-toggle="dropdown">
-                        <figure class="profile-picture">
-                            <img src="@userHelper.GetAvatarPath()" alt="Profile Image" class="img-circle" />
-                        </figure>
-                        <div class="profile-info">
-                            <span class=" text-bold text-info">@userHelper.GetUserFirstName()  @userHelper.GetUserLastName()</span>
+                    <div id="userbox" class="userbox">
+                        <a href="#" data-toggle="dropdown">
+                            <figure class="profile-picture">
+                                <img src="@userHelper.GetAvatarPath()" alt="Profile Image" class="img-circle" />
+                            </figure>
+                            <div class="profile-info">
+                                <span class=" text-bold text-info">@userHelper.GetUserFirstName()  @userHelper.GetUserLastName()</span>
 
 
-                                            @if (User.IsInRole("Admin"))
+                                @if (User.IsInRole("Admin"))
                                 {
-                                                <div>
-                                                    <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
-                                                </div>
+                                    <div>
+                                        <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                                    </div>
                                 }
                                 else if (User.IsInRole("DemoAdmin"))
                                 {
-                                                <div>
-                                                    <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
-                                                </div>
+                                    <div>
+                                        <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                                    </div>
                                 }
                                 else if (User.IsInRole("ProjectManager"))
                                 {
-                                                <div>
-                                                    <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
-                                                </div>
+                                    <div>
+                                        <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                                    </div>
                                 }
                                 else if (User.IsInRole("Developer"))
                                 {
-                                                <div>
-                                                    <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
-                                                </div>
+                                    <div>
+                                        <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                                    </div>
                                 }
                                 else if (User.IsInRole("Submitter"))
                                 {
-                                                <div>
-                                                    <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
-                                                </div>
+                                    <div>
+                                        <span class="role text-bold text-info">@roleHelper.ListUserRoles(UserHelper.GetUserId().Id).ToList()[0]</span>
+                                    </div>
                                 }
                                 else
                                 {
-                                                <div>
-                                                    <span class="role text-bold text-info">Guest</span>
-                                                </div>
+                                    <div>
+                                        <span class="role text-bold text-info">Guest</span>
+                                    </div>
                                 }
 
+                            </div>
+                            <i class="fa custom-caret"></i>
+                        </a>
+
+                        <div class="dropdown-menu">
+                            <ul class="list-unstyled">
+                                <li class="divider"></li>
+                                <li>
+                                    <a role="menuitem" tabindex="-1" href="@Url.Action("ChangePersonalInfo", "Manage")"><i class="fa fa-user"></i> Edit Profile</a>
+                                </li>
+
+
+                                <li>
+                                    <a role="menuitem" tabindex="-1" href=@Url.Action("CustomLogOff", "Account")><i class="fa fa-power-off"></i> Logout</a>
+                                </li>
+
+                            </ul>
                         </div>
-                        <i class="fa custom-caret"></i>
-                    </a>
-
-                    <div class="dropdown-menu">
-                        <ul class="list-unstyled">
-                            <li class="divider"></li>
-                            <li>
-                                <a role="menuitem" tabindex="-1" href="@Url.Action("ChangePersonalInfo", "Manage")"><i class="fa fa-user"></i> Edit Profile</a>
-                            </li>
-
-
-                            <li>
-                                <a role="menuitem" tabindex="-1" href=@Url.Action("CustomLogOff", "Account")><i class="fa fa-power-off"></i> Logout</a>
-                            </li>
-                            
-                        </ul>
                     </div>
-                </div>
                 }
 
             </div>
@@ -262,7 +269,7 @@
 
                                 <!--Users and roles -->
                                 @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager"))
-                                    {
+                                {
                                     <li class="nav-parent">
                                         <a>
                                             <i class="fa fa-users" aria-hidden="true"></i>
@@ -289,7 +296,7 @@
                                         </ul>
 
                                     </li>
-                                    }
+                                }
 
 
                                 <!--Tasks -->
@@ -308,7 +315,7 @@
                                         </li>
 
                                         @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager"))
-                                    {
+                                        {
                                             <li>
                                                 <a href="@Url.Action("Create", "Projects")">
                                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
@@ -316,7 +323,7 @@
                                                 </a>
 
                                             </li>
-                                    }
+                                        }
                                     </ul>
                                 </li>
 
@@ -336,7 +343,7 @@
 
                                         </li>
                                         @if (User.IsInRole("Submitter"))
-                                    {
+                                        {
                                             <li>
                                                 <a href="@Url.Action("Create", "Tickets")">
                                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
@@ -344,10 +351,8 @@
                                                 </a>
 
                                             </li>
-                                    }
-                                        @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin"))
-                                    {
-
+                                        }
+                      
                                             <li>
                                                 <a href="@Url.Action("Index", "TicketHistories")">
                                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
@@ -355,8 +360,16 @@
                                                 </a>
 
                                             </li>
+                                            <li>
+                                                <a href="@Url.Action("Index", "Tickets", new { archivedTickets = "True" })">
+                                                   
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    Archived Tickets
+                                                </a>
 
-                                    }
+                                            </li>
+
+                                        
 
                                     </ul>
                                 </li>
@@ -379,8 +392,10 @@
 
         </div>
 
+
+
         <!--main content-->
-        
+
     </section>
 
 
@@ -432,6 +447,8 @@
 
     <!-- Theme Custom -->
     <script src="~/Scripts/theme.custom.js"></script>
+    <script src="~/Scripts/pnotify.custom.js"></script>
+    <script src="~/Scripts/examples.modals.js"></script>
 
     <!-- Theme Initialization Files -->
     <script src="~/Scripts/theme.init.js"></script>
@@ -451,7 +468,7 @@
                 });
         });
 
-       
+
 
     </script>
 

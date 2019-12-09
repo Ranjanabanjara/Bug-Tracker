@@ -37,17 +37,17 @@
     <div class="row">
         <div class="col-md-3">
             <section class="panel">
-                <div class="panel-body bg-tertiary">
+                <div class="panel-body bg-primary">
                     <div class="widget-summary">
                         <div class="widget-summary-col widget-summary-col-icon">
                             <div class="summary-icon">
-                                <i class="fa fa-life-ring"></i>
+                                <i class="fa fa-random"></i>
                             </div>
                         </div>
                         <div class="widget-summary-col">
                             <div class="summary">
                                 <h4 class="title">
-                                    Unassigned<br />
+                                    Unmanaged<br />
                                     Projects
                                 </h4>
                                 <div class="info">
@@ -67,11 +67,11 @@
 
         <div class="col-md-3">
             <section class="panel">
-                <div class="panel-body bg-tertiary">
+                <div class="panel-body bg-warning">
                     <div class="widget-summary">
                         <div class="widget-summary-col widget-summary-col-icon">
                             <div class="summary-icon">
-                                <i class="fa fa-life-ring"></i>
+                                <i class="fa fa-ticket"></i>
                             </div>
                         </div>
                         <div class="widget-summary-col">
@@ -101,12 +101,15 @@
                     <div class="widget-summary">
                         <div class="widget-summary-col widget-summary-col-icon">
                             <div class="summary-icon">
-                                <i class="fa fa-life-ring"></i>
+                                <i class="fa fa-th-list"></i>
                             </div>
                         </div>
                         <div class="widget-summary-col">
                             <div class="summary">
-                                <h4 class="title">Total Tickets</h4>
+                                <h4 class="title">
+                                    Total<br />
+                                    Tickets
+                                </h4>
                                 <div class="info">
                                     <strong class="amount">@ticketHelper.ListMyTickets().Count()</strong>
                                 </div>
@@ -114,6 +117,7 @@
                             <div class="summary-footer">
                                 <a class="text-uppercase" href="@Url.Action("Index", "Tickets")">View</a>
                             </div>
+                           
                         </div>
                     </div>
                 </div>
@@ -128,7 +132,7 @@
                     <div class="widget-summary">
                         <div class="widget-summary-col widget-summary-col-icon">
                             <div class="summary-icon">
-                                <i class="fa fa-life-ring"></i>
+                                <i class="fa fa-spinner"></i>
                             </div>
                         </div>
                         <div class="widget-summary-col">
@@ -140,6 +144,9 @@
                                 <div class="info">
                                     <strong class="amount">@ticketHelper.ListMyTickets().Where(t => t.TicketStatus.StatusName == "In Progress").Count()</strong>
                                 </div>
+                            </div>
+                            <div class="summary-footer">
+                                <a href="@Url.Action("Index", "Tickets", new { ticketInProgress = "True" })">View</a>
                             </div>
 
                         </div>
@@ -166,20 +173,12 @@
                                 <div class="widget-summary-col">
                                     <div class="summary">
                                         <h4 class="title">My Projects</h4>
-                                        @if (User.IsInRole("DemoAdmin"))
-                                        {
-                                            <div class="info">
-                                                <strong class="amount">@db.Projects.Count()</strong>
-                                            </div>
-
-                                        }
-                                        else
-                                        {
+                                      
                                             <div class="info">
                                                 <strong class="amount">@projectHelper.ListUserProjects(UserHelper.GetUserId().Id).Count()</strong>
                                             </div>
 
-                                        }
+                                        
 
                                     </div>
                                     <div class="summary-footer">
@@ -197,7 +196,7 @@
                             <div class="widget-summary">
                                 <div class="widget-summary-col widget-summary-col-icon">
                                     <div class="summary-icon">
-                                        <i class="fa fa-life-ring"></i>
+                                        <i class="fa fa-ticket"></i>
                                     </div>
                                 </div>
                                 <div class="widget-summary-col">
@@ -460,7 +459,7 @@
     var currentFontSize = 18;
     if (value.TypeName == 'Defect') currentFontSize = 30;
     else if (value.TypeName == 'Feature Request') currentFontSize = 25;
-        else if (value.TypeName == 'Documentation Request') currentFontSize = 20;
+        else if (value.TypeName == 'Document Request') currentFontSize = 20;
          else if (value.TypeName == 'Training Request') currentFontSize = 15;
     var currentVal = Number(value.Percentage);
     var option = {
@@ -473,7 +472,7 @@
     value: currentVal - 0.15,
     direction: 'left'
     }],
-    radius: '70%',
+    radius: '85%',
     label: {
     formatter: function (param) {
     return value.TypeName + '\n\n' + (param.value * 100).toFixed(1) + '%';
@@ -505,7 +504,7 @@
     option: {
     series: [{
     label: {
-    fontSize: 26
+    fontSize: 20
     }
     }]
     }

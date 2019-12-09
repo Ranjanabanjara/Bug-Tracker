@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using Project_3.Helpers;
 using Project_3.Models;
 
 namespace Project_3.Controllers
@@ -13,6 +14,7 @@ namespace Project_3.Controllers
     public class TicketNotificationsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
+     
 
         // GET: TicketNotifications
         public ActionResult Dismiss(int id)
@@ -26,8 +28,8 @@ namespace Project_3.Controllers
         }
         public ActionResult Index()
         {
-            var ticketNotifications = db.TicketNotifications.Include(t => t.Receipent).Include(t => t.Ticket);
-            return View(ticketNotifications.ToList());
+           
+            return View(NotificationHelper.UsersAllNotification());
         }
 
         // GET: TicketNotifications/Details/5
@@ -126,13 +128,14 @@ namespace Project_3.Controllers
         // POST: TicketNotifications/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        public ActionResult DeleteConfirmed(int? notifyId)
         {
-            TicketNotification ticketNotification = db.TicketNotifications.Find(id);
+            TicketNotification ticketNotification = db.TicketNotifications.Find(notifyId);
             db.TicketNotifications.Remove(ticketNotification);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        
 
         protected override void Dispose(bool disposing)
         {

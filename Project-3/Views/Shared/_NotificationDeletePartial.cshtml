@@ -1,0 +1,15 @@
+﻿@model Project_3.Models.TicketNotification
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+@using (Html.BeginForm("Delete", "TicketNotifications", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.Hidden("notifyId", Model.Id)
+    <button type="submit" class="btn btn-danger">Confirm</button>
+
+    <button class="btn btn-default modal-dismiss">Cancel</button>
+}

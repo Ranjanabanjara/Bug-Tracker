@@ -13,18 +13,18 @@ namespace Project_3.Helpers
         private static ApplicationDbContext db = new ApplicationDbContext();
         public void ManageNotifications(Ticket oldTicket, Ticket newTicket)
         {
-            var ticketHasBeenAssigned = oldTicket.AssignedToUserId == null && newTicket.AssignedToUserId != null;
-            var ticketHasBeenUnAssigned = oldTicket.AssignedToUserId != null && newTicket.AssignedToUserId == null;
-            var ticketHasBeenReassigned = oldTicket.AssignedToUserId != null && newTicket.AssignedToUserId != null && oldTicket.AssignedToUserId != newTicket.AssignedToUserId;
+           
+            var ticketHasBeenAssigned = string.IsNullOrEmpty(oldTicket.AssignedToUserId);
+            var ticketHasBeenUnAssigned = string.IsNullOrEmpty(newTicket.AssignedToUserId);
+            
+           
 
             if (ticketHasBeenAssigned)
                 AddAssignmentNotification(oldTicket, newTicket);
+
             else if (ticketHasBeenUnAssigned)
                 AddUnassignmentNotification(oldTicket, newTicket);
-            else if (ticketHasBeenReassigned)
-                AddAssignmentNotification(oldTicket, newTicket);
-                AddUnassignmentNotification(oldTicket, newTicket);
-
+           
         }
     
 
@@ -37,7 +37,7 @@ namespace Project_3.Helpers
                 IsRead = false,
                 ReceipentId = newTicket.AssignedToUserId,
                 Created = DateTime.Now,
-                NotificationBody = $"You have been assigned to a Ticket : {newTicket.Title} created by {newTicket.OwnerUser.FirstName} on {newTicket.Created} on Project {newTicket.Project.ProjectName}."
+                NotificationBody = $"You have been assigned to a Ticket: {newTicket.Title} created on: {newTicket.Created} on Project: {newTicket.Project.ProjectName}."
 
             };
             db.TicketNotifications.Add(notification);
@@ -53,7 +53,7 @@ namespace Project_3.Helpers
                 IsRead = false,
                 ReceipentId = oldTicket.AssignedToUserId,
                 Created = DateTime.Now,
-                NotificationBody = $"You have been unassigned from a Ticket {oldTicket.Title} created by {oldTicket.OwnerUser.FirstName} on {oldTicket.Created} on Project {oldTicket.Project.ProjectName}."
+                NotificationBody = $"You have been unassigned from a Ticket {oldTicket.Title} created on: {oldTicket.Created} on Project: {oldTicket.Project.ProjectName}."
 
             };
             db.TicketNotifications.Add(notification);
@@ -68,6 +68,13 @@ namespace Project_3.Helpers
             return db.TicketNotifications.Include("Sender").Where(t => t.ReceipentId == currentUserId && !t.IsRead).ToList();
 
         }
+
+        public static List<TicketNotification> UsersAllNotification()
+        {
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            return db.TicketNotifications.Where(t => t.ReceipentId == userId).ToList();
+        }
+
      
 
 
