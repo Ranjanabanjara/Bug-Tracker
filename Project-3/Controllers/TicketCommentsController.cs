@@ -53,7 +53,10 @@ namespace Project_3.Controllers
         {
             if (ModelState.IsValid)
             {
+                var userId = User.Identity.GetUserId();
+                ticketComment.UserId = userId;
                 ticketComment.Created = DateTime.Now;
+
                 db.TicketComments.Add(ticketComment);
                 db.SaveChanges();
                 return RedirectToAction("Details", "Tickets", new { id = ticketComment.TicketId });

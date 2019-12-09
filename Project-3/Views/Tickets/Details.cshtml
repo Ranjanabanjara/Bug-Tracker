@@ -519,12 +519,12 @@
                                                    
                                                     <div class="col-xs-1">
                                                         <figure class="image rounded">
-                                                            <img src="@(coment.Ticket.OwnerUser.AvatarPath)" width="45" height="60" alt="user" class="img-circle">
+                                                            <img src="@coment.User.AvatarPath" width="45" height="60" alt="user" class="img-circle">
                                                         </figure>
                                                         
                                                     </div>
                                                     <div class="col-xs-10">
-                                                        <span class="comment">@coment.Ticket.OwnerUser.FullName</span><br />
+                                                        <span class="comment">@coment.User.FullName</span><br />
                                                         <span class="comment">@coment.Comment</span><br />
                                                           <span class="demologin">@coment.Created</span>
                                                     </div>
