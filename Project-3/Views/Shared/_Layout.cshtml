@@ -224,6 +224,9 @@
                             <ul class="list-unstyled">
                                 <li class="divider"></li>
                                 <li>
+                                    <a role="menuitem" tabindex="-1" href="#" style="font-size:10px">@UserHelper.GetUserEmail()</a>
+                                </li>
+                                <li>
                                     <a role="menuitem" tabindex="-1" href="@Url.Action("ChangePersonalInfo", "Manage")"><i class="fa fa-user"></i> Edit Profile</a>
                                 </li>
 
@@ -268,7 +271,7 @@
                                 </li>
 
                                 <!--Users and roles -->
-                                @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager"))
+                                @if(User.IsInRole("DemoAdmin"))
                                 {
                                     <li class="nav-parent">
                                         <a>
@@ -277,18 +280,21 @@
                                         </a>
 
                                         <ul class="nav nav-children">
+                                            
+                                                <li>
+                                                    <a href="@Url.Action("ManageRole", "Admin")">
+                                                        <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                        Manage Role
+                                                    </a>
 
-                                            <li>
-                                                <a href="@Url.Action("ManageRole", "Admin")">
-                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                                    Manage Role
-                                                </a>
+                                                </li>
 
-                                            </li>
+                                            
+
                                             <li>
                                                 <a href="@Url.Action("ManageProjectUsers", "Admin")">
                                                     <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                                    Manage Projects
+                                                    Manage Projects 
                                                 </a>
 
                                             </li>
@@ -314,7 +320,7 @@
 
                                         </li>
 
-                                        @if (User.IsInRole("Admin") || User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager"))
+                                        @if(User.IsInRole("DemoAdmin") || (User.IsInRole("ProjectManager")))
                                         {
                                             <li>
                                                 <a href="@Url.Action("Create", "Projects")">
@@ -342,25 +348,15 @@
                                             </a>
 
                                         </li>
-                                        @if (User.IsInRole("Submitter"))
-                                        {
-                                            <li>
-                                                <a href="@Url.Action("Create", "Tickets")">
-                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                                    Create New Ticket
-                                                </a>
-
-                                            </li>
-                                        }
-
                                         <li>
                                             <a href="@Url.Action("Index", "TicketHistories")">
                                                 <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                                Ticket Histories
+                                                All Ticket Histories
                                             </a>
 
                                         </li>
-                                        @if (User.IsInRole("Admin"))
+
+                                        @if (User.IsInRole("DemoAdmin"))
                                         {
                                             <li>
                                                 <a href="@Url.Action("Index", "Tickets", new { archivedTickets = "True" })">
@@ -371,16 +367,20 @@
 
                                             </li>
 
+
                                         }
 
-                                        <li>
-                                            <a href="@Url.Action("Index", "Tickets", new { archivedTickets = "True" })">
 
-                                                <i class="fa fa-caret-right" aria-hidden="true"></i>
-                                                Archived Tickets
-                                            </a>
+                                        @if (User.IsInRole("Submitter"))
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("Create", "Tickets")">
+                                                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                                                    Create New Ticket
+                                                </a>
 
-                                        </li>
+                                            </li>
+                                        }
 
 
 

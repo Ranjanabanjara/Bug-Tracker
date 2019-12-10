@@ -51,10 +51,10 @@
                                     Projects
                                 </h4>
                                 <div class="info">
-                                    <strong class="amount">@projectHelper.ProjectsMissingRoles().Count</strong>
+                                    <strong class="amount">@projectHelper.ProjectsMissingRoles().Count()</strong>
                                 </div>
                                 <div class="summary-footer">
-                                    <a href="@Url.Action("Index", "Projects", new { badProj = "True" })">View</a>
+                                    <a href="@Url.Action("Index", "Projects", new { unmanagedProjects = "True" })">View</a>
                                 </div>
 
                             </div>
@@ -297,18 +297,18 @@
                             {
                                 foreach (var project in db.Projects.ToList())
                                 {
-                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Completed") && !t.TicketStatus.StatusName.Equals("Archived")).Count();
+                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Resolved") && !t.TicketStatus.StatusName.Equals("Archived")).Count();
                                     if (openTicketCount != 0)
                                     {
                                         <div class='bar_group__bar thin' label='@project.ProjectName' show_values='true' tooltip='true' value='@openTicketCount'></div>
                                     }
                                 }
                             }
-                            else if (User.IsInRole("DemoManager"))
+                            else if (User.IsInRole("ProjectManager"))
                             {
                                 foreach (var project in currentUser.Projects.ToList())
                                 {
-                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Completed") && !t.TicketStatus.StatusName.Equals("Archived")).Count();
+                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Resolved") && !t.TicketStatus.StatusName.Equals("Archived")).Count();
                                     if (openTicketCount != 0)
                                     {
                                         <div class='bar_group__bar thin' label='@project.ProjectName' show_values='true' tooltip='true' value='@openTicketCount'></div>
@@ -319,7 +319,7 @@
                             {
                                 foreach (var project in currentUser.Projects.ToList())
                                 {
-                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Completed") && !t.TicketStatus.StatusName.Equals("Archived") && t.AssignedToUserId == currentUser.Id).Count();
+                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Resolved") && !t.TicketStatus.StatusName.Equals("Archived") && t.AssignedToUserId == currentUser.Id).Count();
                                     if (openTicketCount != 0)
                                     {
                                         <div class='bar_group__bar thin' label='@project.ProjectName' show_values='true' tooltip='true' value='@openTicketCount'></div>
@@ -330,7 +330,7 @@
                             {
                                 foreach (var project in currentUser.Projects.ToList())
                                 {
-                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Completed") && !t.TicketStatus.StatusName.Equals("Archived") && t.OwnerUserId == currentUser.Id).Count();
+                                    var openTicketCount = project.Tickets.Where(t => !t.TicketStatus.StatusName.Equals("Resolved") && !t.TicketStatus.StatusName.Equals("Archived") && t.OwnerUserId == currentUser.Id).Count();
                                     if (openTicketCount != 0)
                                     {
                                         <div class='bar_group__bar thin' label='@project.ProjectName' show_values='true' tooltip='true' value='@openTicketCount'></div>

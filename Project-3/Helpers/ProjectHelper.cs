@@ -72,19 +72,40 @@ namespace Project_3.Helpers
 
         public ICollection<Project> ProjectsMissingRoles()
         {
-           
-            var badProjects = new List<Project>();
+            
+            var userId = HttpContext.Current.User.Identity.GetUserId();
+            var user = db.Users.Find(userId);
+            var unmanagedProjects = new List<Project>();
             var allProjects = db.Projects.ToList();
-            foreach (var project in allProjects)
+
+            if (roleHelper.IsUserInRole(userId, "DemoAdmin"))
             {
-                if (ListUsersOnProjectInRole(project.Id, "ProjectManager").Count() == 0 ||
-                   ListUsersOnProjectInRole(project.Id, "Developer").Count() == 0 ||
-                   ListUsersOnProjectInRole(project.Id, "Submitter").Count() == 0)
+                foreach (var project in allProjects)
                 {
-                    badProjects.Add(project);
+                    if (ListUsersOnProjectInRole(project.Id, "ProjectManager").Count() == 0 ||
+                       ListUsersOnProjectInRole(project.Id, "Developer").Count() == 0 ||
+                       ListUsersOnProjectInRole(project.Id, "Submitter").Count() == 0)
+                    {
+                        unmanagedProjects.Add(project);
+                    }
                 }
+
             }
-            return badProjects;
+            if (roleHelper.IsUserInRole(userId, "ProjectManager"))
+            {
+                foreach (var project in user.Projects)
+                {
+                    if (ListUsersOnProjectInRole(project.Id, "Developer").Count() == 0 ||
+                       ListUsersOnProjectInRole(project.Id, "Submitter").Count() == 0)
+
+                    {
+                        unmanagedProjects.Add(project);
+                    }
+                }
+
+            }
+          
+            return unmanagedProjects;
 
         }
 

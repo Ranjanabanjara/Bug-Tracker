@@ -4,6 +4,9 @@
 @using Microsoft.AspNet.Identity;
 @using Microsoft.AspNet.Identity.EntityFramework;
 @using Project_3.Helpers;
+@{
+    ApplicationDbContext db = new ApplicationDbContext();
+}
 
 
 <section role="main" class="content-body">
@@ -74,7 +77,16 @@
                     <div class="clearfix"></div>
                     <hr class="dotted short">
                     <h6 class="text-bold"><i class="fa fa-slack"></i>  <span>My Projects</span> </h6>
-                    <span>@projectHelper.ListUserProjects(UserHelper.GetUserId().Id).Count()</span>
+                    @if (User.IsInRole("DemoAdmin"))
+                    {
+                        <span>@db.Projects.Count()</span>
+
+                    }
+                    else
+                    {
+                        <span>@projectHelper.ListUserProjects(UserHelper.GetUserId().Id).Count()</span>
+                    }
+
                     <div class="clearfix pull-right">
                         @Html.ActionLink("View", "Index", "Projects")
                     </div>
@@ -89,7 +101,7 @@
 
                     <div class="social-icons-list text-center">
                         <a rel="tooltip" data-placement="bottom" target="_blank" href="https://www.facebook.com/ranju.banjara" data-original-title="Facebook"><i class="fa fa-facebook"></i><span>Facebook</span></a>
-             
+
                         <a rel="tooltip" data-placement="bottom" href="https://www.linkedin.com/in/ranjana-banjara-241860125/" data-original-title="Linkedin"><i class="fa fa-linkedin"></i><span>Linkedin</span></a>
                     </div>
 

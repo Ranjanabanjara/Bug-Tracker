@@ -17,6 +17,7 @@ namespace Project_3.Controllers
         private ProjectHelper projectHelper = new ProjectHelper();
 
         // GET: Admin
+        [Authorize(Roles = "DemoAdmin")]
         public ActionResult ManageRole()
         {
             ViewBag.UserIds = new MultiSelectList(db.Users, "Id", "NameWithEmail");
@@ -85,17 +86,14 @@ namespace Project_3.Controllers
         }
        
         //manage project users get
-        [Authorize(Roles = "Admin, DemoAdmin")]
+        [Authorize(Roles = "DemoAdmin")]
         public ActionResult ManageProjectUsers()
         {
             ViewBag.Projects = new MultiSelectList(db.Projects, "Id", "ProjectName");
             ViewBag.Developers = new MultiSelectList(roleHelper.UsersInRole("Developer"), "Id", "NameWithEmail");
             ViewBag.Submitters = new MultiSelectList(roleHelper.UsersInRole("Submitter"), "Id", "NameWithEmail");
-
-            if (User.IsInRole("Admin")|| User.IsInRole("DemoAdmin"))
-            {
-                ViewBag.ProjectManagerId = new SelectList(roleHelper.UsersInRole("ProjectManager"), "Id", "NameWithEmail");
-            }
+            ViewBag.ProjectManagerId = new SelectList(roleHelper.UsersInRole("ProjectManager"), "Id", "NameWithEmail");
+            
             var myData = new List<ManageProjectViewModel>();           
             foreach (var user in db.Users.ToList())
             {
@@ -117,6 +115,7 @@ namespace Project_3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ManageProjectUsers(List<int> projects, string projectManagerId, List<string> developers, List<string> submitters)
         {
+           
             if (projects != null)
             {
                 foreach (var projectId in projects)
@@ -125,6 +124,12 @@ namespace Project_3.Controllers
                     foreach (var user in projectHelper.UsersOnProject(projectId).ToList())
                     {
                         projectHelper.RemoveUserFromProject(user.Id, projectId);
+
+                    }
+                    if (!string.IsNullOrEmpty(projectManagerId))
+                    {
+                        var userId = User.Identity.GetUserId();
+                        projectHelper.AddUserToProject(userId, projectId);
 
                     }
                     if (!string.IsNullOrEmpty(projectManagerId))

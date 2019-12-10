@@ -22,8 +22,7 @@
         </header>
         <h2 class="htwo">MANAGE USERS ON PROJECT</h2>
         <!--Select Boxes-->
-        @if (User.IsInRole("DemoAdmin") || User.IsInRole("ProjectManager"))
-        {
+      
             <div class="container" style="padding:20px">
                 <!--Select Boxes-->
                 @using (Html.BeginForm(null, null, FormMethod.Post, new { style = "width:90%;" }))
@@ -39,8 +38,10 @@
                                 @Html.DropDownList("ProjectManagerId", null, new { @class = "form-control" })
                             </div>
                         </div>
-
                     }
+
+
+
 
                     <div class="row" style="padding:20px">
                         <div class="col-lg-offset-1 col-lg-8">
@@ -62,7 +63,8 @@
                     </div>
                 }
             </div>
+        
+       
 
-        }
 
     </section>

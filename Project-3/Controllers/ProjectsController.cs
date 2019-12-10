@@ -19,12 +19,13 @@ namespace Project_3.Controllers
         private RoleHelper roleHelper = new RoleHelper();
         private ProjectHelper projectHelper = new ProjectHelper();
 
+        [Authorize(Roles = "DemoAdmin, ProjectManager")]
         public ActionResult ManageUsers(int id)
         {
             ViewBag.ProjectId = id;
-            var pmId = projectHelper.ListUsersOnProjectInRole(id, "ProjectManager").FirstOrDefault();
-            ViewBag.ProjectManagerId = new SelectList(roleHelper.UsersInRole("ProjectManager"), "Id", "NameWithEmail", pmId);
-            ViewBag.Developers = new MultiSelectList(roleHelper.UsersInRole("Developer"), "Id", "NameWithEmail", projectHelper.ListUsersOnProjectInRole(id, "Developers"));
+            var pmId = projectHelper.ListUsersOnProjectInRole(id, "ProjectManager").FirstOrDefault();            
+           ViewBag.ProjectManagerId = new SelectList(roleHelper.UsersInRole("ProjectManager"), "Id", "NameWithEmail", pmId);
+           ViewBag.Developers = new MultiSelectList(roleHelper.UsersInRole("Developer"), "Id", "NameWithEmail", projectHelper.ListUsersOnProjectInRole(id, "Developers"));
             ViewBag.Submitters = new MultiSelectList(roleHelper.UsersInRole("Submitter"), "Id", "NameWithEmail", projectHelper.ListUsersOnProjectInRole(id, "Submitters"));
 
             return View();
@@ -34,11 +35,17 @@ namespace Project_3.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ManageUsers(int projectId, string projectManagerId, List<string>developers, List<string>submitters)
         {
+            var userId = User.Identity.GetUserId();
             foreach(var user in projectHelper.UsersOnProject(projectId).ToList())
             {
                 projectHelper.RemoveUserFromProject(user.Id, projectId);
 
             }
+            if (string.IsNullOrEmpty(projectManagerId))
+            {
+                projectHelper.AddUserToProject(userId, projectId);
+            }
+          
             if (!string.IsNullOrEmpty(projectManagerId))
             {
                 projectHelper.AddUserToProject(projectManagerId, projectId);
@@ -65,10 +72,10 @@ namespace Project_3.Controllers
             
         // GET: Projects
         
-        public ActionResult Index(string badProj)
+        public ActionResult Index(string unmanagedProjects)
         {
             List<Project> myProjects = new List<Project>();
-            if (!string.IsNullOrEmpty(badProj))
+            if (!string.IsNullOrEmpty(unmanagedProjects))
             {
                 return View(projectHelper.ProjectsMissingRoles().ToList());
             }
@@ -77,7 +84,7 @@ namespace Project_3.Controllers
                 var userId = User.Identity.GetUserId();
                 var user = db.Users.Find(userId);
                 var userRole = roleHelper.ListUserRoles(user.Id).FirstOrDefault();
-                if (userRole == "DemoAdmin" || userRole == "Admin")
+                if (userRole == "DemoAdmin")
                 {
                     return View(db.Projects.ToList());
                 }
@@ -103,7 +110,7 @@ namespace Project_3.Controllers
             }
             return View(project);
         }
-        [Authorize(Roles = "DemoAdmin")]
+        [Authorize(Roles = "DemoAdmin, ProjectManager")]
         // GET: Projects/Create
         public ActionResult Create()
         {
